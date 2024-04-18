@@ -13,6 +13,7 @@ map("n", "<C-u>", "<C-u>zz")
 map('i', '<C-c>', '<ESC>', opt)
 
 
+map('n', '<Esc>', '<cmd>noh<CR>')
 
 -- map('i', '<CAPSLOCK>', '<ESC>', opt)
 map("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
