@@ -4,6 +4,16 @@ local map = vim.keymap.set
 local opt = { noremap = true, silent = true }
 
 -- setting
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
+-- ESC
+map('i', '<C-c>', '<ESC>', opt)
+
+
+
 -- map('i', '<CAPSLOCK>', '<ESC>', opt)
 map("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
 map("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
