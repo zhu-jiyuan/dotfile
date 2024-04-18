@@ -10,6 +10,8 @@ vim.bo.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftround = true
 
+vim.opt.undofile = true
+
 -- 显示行号
 
 vim.wo.number = true
@@ -29,9 +31,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     end,
 })
 
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'split'
+
 -- 高亮所在行
 
-vim.wo.cursorline = true
+vim.opt.cursorline = true
 
 -- 显示左侧图标指示列
 
