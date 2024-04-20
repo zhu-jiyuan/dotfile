@@ -1,0 +1,55 @@
+############### PATH #################
+addToPathFront /usr/local/go/bin
+addToPathFront $HOME/.local/bin
+
+
+############### ENV ##################
+
+# export LANG=en_US.UTF-8
+# fzf
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+
+############### alias #################
+# base
+alias ll='ls -lh --color'
+alias ls='ls --color'
+alias vim='nvim'
+alias clear='tmux clear-history;clear'
+alias cls='clear'
+
+# git
+alias glog='git log --oneline --decorate --graph'
+alias gco='git checkout'
+alias g='git'
+alias ga='git add'
+alias gst='git status'
+alias gcm='git checkout master'
+alias gp='git push'
+alias gcmsg='git commit -m'
+alias gl='git pull'
+
+# batcat
+alias bat='batcat'
+
+############### tools function #################
+
+# tool function
+proxy_host_ip=127.0.0.1
+proxy_port=6666
+proxy_user=username
+proxy_passwd=passwd
+on_proxy () {
+  export http_proxy="http://$proxy_user:$proxy_passwd@$proxy_host_ip:$proxy_port"
+  export https_proxy="https://$proxy_user:$proxy_passwd@$proxy_host_ip:$proxy_port"
+  echo "HTTP Proxy on"
+}
+
+# where noproxy
+off_proxy () {
+  unset http_proxy
+  unset https_proxy
+  echo "HTTP Proxy off"
+}
+
+
