@@ -10,8 +10,8 @@ vim.bo.tabstop = 4
 vim.o.softtabstop = 4
 vim.o.shiftround = true
 
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
-
 -- 显示行号
 
 vim.wo.number = true
@@ -86,9 +86,9 @@ vim.o.cmdheight = 1
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
+vim.opt.wrap = false
 
 -- smaller updatetime
-
 vim.o.updatetime = 300
 vim.o.timeoutlen = 500
 vim.o.splitbelow = true
@@ -113,7 +113,7 @@ vim.o.shortmess = vim.o.shortmess .. "c"
 
 -- 补全显示10行
 
-vim.o.pumheight = 10
+-- vim.o.pumheight = 10
 
 -- Leader键
 --

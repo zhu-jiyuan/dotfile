@@ -25,6 +25,7 @@ cd $(dirname $0)
 git submodule update --init --recursive
 
 # you can write your own config in .zsh_custom
-rm ~/.zshrc
+
+[[ ! ( -f $HOME/.zshrc && ! -h $HOME/.zshrc) ]] || mv $HOME/.zshrc $HOME/.zshrc.bak
 ln -s $(pwd)/zsh/.zshrc ~/.zshrc
 

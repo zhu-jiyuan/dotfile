@@ -68,10 +68,10 @@ return {
         },
     },
     -- tab line
-    {
-        "akinsho/bufferline.nvim",
-        config = true
-    },
+    -- {
+    --     "akinsho/bufferline.nvim",
+    --     config = true
+    -- },
     -- blankline
     {
         "lukas-reineke/indent-blankline.nvim",
