@@ -25,8 +25,9 @@ local on_attach = function(_, bufnr)
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
-    nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[n]ame')
-    nmap('<leader>ca', "<cmd>Lspsaga code_action<CR>", '[C]ode [A]ction')
+    -- nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[n]ame')
+    nmap('<leader>rn', function() vim.lsp.buf.rename() end, '[R]e[n]ame')
+    nmap('<leader>ca', function() vim.lsp.buf.code_action() end, '[C]ode [A]ction')
 
     nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
     nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -36,8 +37,8 @@ local on_attach = function(_, bufnr)
     nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
-    nmap('K',"<cmd>Lspsaga hover_doc<CR>" , 'Hover Documentation')
-    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('K', function() vim.lsp.buf.hover() end, 'Hover Documentation')
+    nmap('<C-h>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Lesser used LSP functionality
     nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -67,14 +68,14 @@ return {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-            'nvimdev/lspsaga.nvim',
+            -- 'nvimdev/lspsaga.nvim',
         },
         config = function()
             require("neoconf").setup({
                 -- override any of the default settings here
             })
             require "neodev".setup()
-            require "lspsaga".setup()
+            -- require "lspsaga".setup()
 
             require("mason").setup({
                 ui = {
