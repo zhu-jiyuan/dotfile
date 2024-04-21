@@ -1,4 +1,5 @@
 kickstart_nvim/
 github-copilot/
 zsh/.zsh_history
-tmux/plugins/
+tmux/plugins/*
+!tmux/plugins/tpm
