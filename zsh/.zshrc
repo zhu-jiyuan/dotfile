@@ -19,7 +19,7 @@ export ZSH="$HOME/.config/zsh"
 # export HISTSIZE=65535
 # export SAVEHIST=65535
 source $ZSH/.zsh_profile
-[[ ! -f $HOME/.zsh_custom ]] || source $$HOME/.zsh_custom
+[[ ! -f $HOME/.zsh_custom ]] || source $HOME/.zsh_custom
 
 ############# options#############
 unsetopt flowcontrol
