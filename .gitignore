@@ -3,3 +3,7 @@ github-copilot/
 zsh/.zsh_history
 tmux/plugins/*
 !tmux/plugins/tpm
+zsh/plugins/*
+!zsh/plugins/sudo
+zsh/themes/powerlevel10k
+tmux/plugins/tpm

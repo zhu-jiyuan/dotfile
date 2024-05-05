@@ -62,7 +62,7 @@ return {
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior, count = 1 }),
                     ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior, count = 1 }),
-                    -- ['<C-c>'] = cmp.mapping.close(),
+                    ['<C-x>'] = cmp.mapping.close(),
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
                         if cmp.visible() then
@@ -92,6 +92,7 @@ return {
 
                 }),
                 sources = cmp.config.sources({
+                    { name = 'copilot' },
                     { name = 'nvim_lsp' },
                     { name = 'buffer' },
                     { name = 'path' },
@@ -99,6 +100,7 @@ return {
                 })
 
             })
+            
             -- `/` cmdline setup.
             cmp.setup.cmdline('/', {
                 mapping = cmp.mapping.preset.cmdline(),
