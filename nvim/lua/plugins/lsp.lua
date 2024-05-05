@@ -29,12 +29,13 @@ local on_attach = function(_, bufnr)
     nmap('<leader>rn', function() vim.lsp.buf.rename() end, '[R]e[n]ame')
     nmap('<leader>ca', function() vim.lsp.buf.code_action() end, '[C]ode [A]ction')
 
-    nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-    nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-    nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    local fzf_lua = require "fzf-lua"
+    nmap('gd', fzf_lua.lsp_definitions, '[G]oto [D]efinition')
+    nmap('gr', fzf_lua.lsp_references, '[G]oto [R]eferences')
+    nmap('gI', fzf_lua.lsp_implementations, '[G]oto [I]mplementation')
+    nmap('<leader>D',fzf_lua.lsp_typedefs, 'Type [D]efinition')
+    nmap('<leader>ds', fzf_lua.lsp_document_symbols, '[D]ocument [S]ymbols')
+    nmap('<leader>ws', fzf_lua.lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
 
     -- See `:help K` for why this keymap
     nmap('K', function() vim.lsp.buf.hover() end, 'Hover Documentation')
@@ -55,7 +56,7 @@ local on_attach = function(_, bufnr)
         })
     end, 'Format current buffer with LSP')
     -- lsp diagnostics
-    nmap('<leader>da', require('telescope.builtin').diagnostics, 'lsp diagnosticls')
+    nmap('<leader>da', fzf_lua.lsp_workspace_diagnostics, 'lsp diagnosticls')
 end
 
 return {
