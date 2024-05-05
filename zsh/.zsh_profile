@@ -9,7 +9,8 @@ addToPathFront $HOME/.local/bin
 # fzf
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
-
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 ############### alias #################
 # base
 alias ll='ls -lh --color'
@@ -31,6 +32,13 @@ alias gl='git pull'
 
 # batcat
 alias bat='batcat'
+
+# fd
+alias fd='fdfind'
+if [ ! -L ~/.local/bin/fd ] && command -v fdfind &>/dev/null; then
+    ln -s "$(command -v fdfind)" ~/.local/bin/fd
+fi
+
 
 ############### tools function #################
 
