@@ -21,11 +21,10 @@ map('n', '<Esc>', '<cmd>noh<CR>')
 map("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
 map("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 --- save
-map('n', '<C-s>', ':w<CR>', opt)
 map('n', ' ', '<NOP>', opt)
 
 -- nvim-tree 
-map('n', '<leader>e' , ':NvimTreeToggle<CR>', opt)
+map('n', '<leader>e' , ':Oil<CR>', opt)
 
 -- bufferline
 -- map('n', '<leader>1' , ':BufferLineGoToBuffer 1<CR>', opt)
