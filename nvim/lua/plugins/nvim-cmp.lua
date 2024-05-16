@@ -54,7 +54,7 @@ return {
                     end,
                 },
                 window = {
-                    -- completion = cmp.config.window.bordered(),
+                    completion = cmp.config.window.bordered(),
                     -- documentation = cmp.config.window.bordered(),
                 },
                 mapping = cmp.mapping.preset.insert({
@@ -92,7 +92,6 @@ return {
 
                 }),
                 sources = cmp.config.sources({
-                    { name = 'copilot' },
                     { name = 'nvim_lsp' },
                     { name = 'buffer' },
                     { name = 'path' },

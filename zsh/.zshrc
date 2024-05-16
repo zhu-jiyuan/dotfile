@@ -16,8 +16,17 @@ addToPathFront() {
 }
 
 export ZSH="$HOME/.config/zsh"
-# export HISTSIZE=65535
-# export SAVEHIST=65535
+
+export HISTFILE=~/.zsh_history
+setopt INC_APPEND_HISTORY
+# add timestamp to History
+# export HISTTIMEFORMAT="[%F %T] "
+# setopt EXTENDED_HISTORY
+
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000000
+export SAVEHIST=655350
+
 source $ZSH/.zsh_profile
 [[ ! -f $HOME/.zsh_custom ]] || source $HOME/.zsh_custom
 
