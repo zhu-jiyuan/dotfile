@@ -16,7 +16,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 alias ll='ls -lh --color'
 alias ls='ls --color'
 alias vim='nvim'
-alias clear='tmux clear-history;clear'
+if [ -n "$TMUX" ]; then
+    alias clear='tmux clear-history;clear'
+fi
 alias cls='clear'
 
 # git
