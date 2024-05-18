@@ -10,3 +10,5 @@
 require "settings"
 require "lazynvim"
 require "keymaps"
+require "autocmd"
+

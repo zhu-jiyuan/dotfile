@@ -10,7 +10,7 @@
 --         end
 --     }
 --
--- 
+--
 
 
 return {
@@ -37,7 +37,7 @@ return {
                 invert_tabline = false,
                 invert_intend_guides = false,
                 inverse = true, -- invert background for search, diffs, statuslines and errors
-                contrast = "", -- can be "hard", "soft" or empty string
+                contrast = "",  -- can be "hard", "soft" or empty string
                 palette_overrides = {},
                 overrides = {},
                 dim_inactive = false,
@@ -50,8 +50,11 @@ return {
     -- bottom line
     {
         'nvim-lualine/lualine.nvim',
+        -- opts = { theme = 'gruvbox-material'},
         config = function()
-            require('lualine').setup({})
+            require('lualine').setup({
+                options = { theme = 'gruvbox-material' },
+            })
         end
     },
     -- top line
