@@ -45,11 +45,11 @@ return {
 	{
 		"LunarVim/bigfile.nvim",
 	},
-	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		config = true,
-	},
+	-- {
+	-- 	"akinsho/toggleterm.nvim",
+	-- 	version = "*",
+	-- 	config = true,
+	-- },
 
 	-- nvim 0.10 is support this plugin.
 	-- {
