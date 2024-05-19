@@ -1,119 +1,116 @@
+local opt = vim.opt
 -- 文件编码格式
 
-vim.g.encoding = "UTF-8"
-vim.o.fileencoding = "UTF-8"
+opt.encoding = "UTF-8"
+opt.fileencoding = "UTF-8"
 
 -- tab设置为4个空格
 
-vim.o.tabstop = 4
-vim.bo.tabstop = 4
-vim.o.softtabstop = 4
-vim.o.shiftround = true
+opt.tabstop = 4
+opt.softtabstop = 4
+opt.shiftround = true
 
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.undofile = true
+opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+opt.undofile = true
 -- 显示行号
 
-vim.wo.number = true
+opt.number = true
 
 -- 使用相对行号
 
-vim.wo.relativenumber = true
+opt.relativenumber = true
 
 -- 剪切板设置
 
-vim.opt.clipboard = "unnamedplus"
-
--- highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-})
+opt.clipboard = "unnamedplus"
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+opt.inccommand = "split"
 
 -- 高亮所在行
 
-vim.opt.cursorline = true
+opt.cursorline = true
 
 -- 显示左侧图标指示列
 
-vim.wo.signcolumn = "yes"
+opt.signcolumn = "yes"
 
 -- 右侧参考线
 
-vim.wo.colorcolumn = "160"
+opt.colorcolumn = "160"
 
 -- 自动加载外部修改
-
-vim.o.autoread = true
-vim.bo.autoread = true
+opt.autoread = true
 
 -- >> << 时移动长度
 
-vim.o.shiftwidth = 4
-vim.bo.shiftwidth = 4
+opt.shiftwidth = 4
 
 -- 空格替代
 
-vim.o.expandtab = true
-vim.bo.expandtab = true
+opt.expandtab = true
 
 -- 新行对齐当前行
 
-vim.o.autoindent = true
-vim.bo.autoindent = true
-vim.o.smartindent = true
+opt.autoindent = true
+opt.smartindent = true
 
 -- 搜索大小写不敏感，除非包含大写
 
-vim.o.ignorecase = true
-vim.o.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 
 -- 搜索高亮
 
-vim.o.hlsearch = true
-vim.o.incsearch = true
+opt.hlsearch = true
+opt.incsearch = true
 
 -- 命令模式行高
 
-vim.o.cmdheight = 1
+opt.cmdheight = 1
 
 -- 禁止创建备份文件
 
-vim.o.backup = false
-vim.o.writebackup = false
-vim.o.swapfile = false
-vim.opt.wrap = false
+opt.backup = false
+opt.writebackup = false
+opt.swapfile = false
+opt.wrap = false
 
 -- smaller updatetime
-vim.o.updatetime = 300
-vim.o.timeoutlen = 500
-vim.o.splitbelow = true
-vim.o.splitright = true
+opt.updatetime = 300
+opt.timeoutlen = 500
+opt.splitbelow = true
+opt.splitright = true
 
 -- 自动补全不自动选中
 
-vim.g.completeopt = "menu,menuone,noselect,noinsert"
+opt.completeopt = "menu,menuone,noselect,noinsert"
 
 -- 样式
 
---vim.o.background = "dark"
---vim.o.termguicolors = true
---vim.opt.termguicolors = true
+--opt.background = "dark"
+--opt.termguicolors = true
+--opt.termguicolors = true
 
 -- 不可见字符的显示，这里只把空格显示为一个点
 
-vim.o.list = false
-vim.o.listchars = "space:·,tab:>-"
-vim.o.wildmenu = true
-vim.o.shortmess = vim.o.shortmess .. "c"
+opt.list = false
+opt.listchars = "space:·,tab:>-"
+opt.wildmenu = true
+-- opt.shortmess = vim.o.shortmess .. "c"
 
+-- 代码折叠
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldcolumn = "1"
+-- opt.foldtext = ""
+
+opt.foldnestmax = 3
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 -- 补全显示10行
 
--- vim.o.pumheight = 10
+-- opt.pumheight = 10
 
 -- Leader键
 --
