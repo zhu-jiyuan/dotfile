@@ -29,4 +29,4 @@ git submodule update --init --recursive
 [[ ! ( -f $HOME/.zshrc && ! -h $HOME/.zshrc) ]] || mv $HOME/.zshrc $HOME/.zshrc.bak
 ln -s $(pwd)/zsh/.zshrc ~/.zshrc
 
-cp ./tmux-sessionizer ~/.local/bin/
+cp ./bin/tmux-sessionizer ~/.local/bin/
