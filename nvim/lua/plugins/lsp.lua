@@ -66,8 +66,8 @@ end
 
 return {
 	{
-		event = "VeryLazy",
 		"neovim/nvim-lspconfig",
+		event = "VeryLazy",
 		dependencies = {
 			{ "folke/neodev.nvim", opts = {} },
 			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
@@ -76,6 +76,9 @@ return {
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			-- 'nvimdev/lspsaga.nvim',
 		},
+		-- opts = {
+		-- 	autoformat = false,
+		-- },
 		config = function()
 			require("neoconf").setup({
 				-- override any of the default settings here
