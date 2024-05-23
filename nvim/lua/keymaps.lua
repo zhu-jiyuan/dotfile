@@ -11,19 +11,21 @@ map("n", "<C-u>", "<C-u>zz")
 map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 map("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 -- ESC
-map('i', '<C-c>', '<ESC>', opt)
+map("i", "<C-c>", "<ESC>", opt)
 
-
-map('n', '<Esc>', '<cmd>noh<CR>')
+map("n", "<Esc>", "<cmd>noh<CR>")
 
 -- map('i', '<CAPSLOCK>', '<ESC>', opt)
 map("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
 map("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
---- save
-map('n', ' ', '<NOP>', opt)
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
 
--- nvim-tree 
-map('n', '<leader>e' , ':Oil<CR>', opt)
+--- save
+map("n", " ", "<NOP>", opt)
+
+-- nvim-tree
+map("n", "<leader>e", ":Oil<CR>", opt)
 
 -- bufferline
 -- map('n', '<leader>1' , ':BufferLineGoToBuffer 1<CR>', opt)

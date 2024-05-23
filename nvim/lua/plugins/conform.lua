@@ -1,3 +1,5 @@
+local disable_filetypes = { c = true, cpp = true }
+
 return {
 	{
 		"stevearc/conform.nvim",
@@ -11,6 +13,15 @@ return {
 					-- Use a sub-list to run only the first available formatter
 					javascript = { { "prettierd", "prettier" } },
 				},
+				format_on_save = function(bufnr)
+                    if disable_filetypes[vim.bo[bufnr].filetype] then
+                        return
+                    end
+					return {
+						timeout_ms = 500,
+						lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+					}
+				end,
 			})
 		end,
 	},
