@@ -13,3 +13,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
+[submodule "zsh/plugins/zlua"]
+	path = zsh/plugins/zlua
+	url = https://github.com/skywind3000/z.lua.git

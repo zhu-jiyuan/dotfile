@@ -60,7 +60,8 @@ export MANROFFOPT='-c'
 source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fpath=($ZSH/plugins/zsh-completions/src $fpath)
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+eval "$(lua $ZSH/plugins/zlua/z.lua --init zsh enhanced once echo fzf)"
 source $ZSH/plugins/sudo/sudo.zsh
 
 
