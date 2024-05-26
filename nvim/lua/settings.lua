@@ -78,7 +78,8 @@ option.cmdheight = 1
 option.backup = false
 option.writebackup = false
 option.swapfile = false
-option.wrap = false
+-- 换行显示
+option.wrap = true
 
 -- smaller updatetime
 option.updatetime = 300
