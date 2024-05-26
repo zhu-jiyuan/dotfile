@@ -1,4 +1,4 @@
-local disable_filetypes = { c = true, cpp = true }
+local disable_filetypes = { c = true, cpp = true, lua = true }
 
 return {
 	{
@@ -14,9 +14,9 @@ return {
 					javascript = { { "prettierd", "prettier" } },
 				},
 				format_on_save = function(bufnr)
-                    if disable_filetypes[vim.bo[bufnr].filetype] then
-                        return
-                    end
+					if disable_filetypes[vim.bo[bufnr].filetype] then
+						return
+					end
 					return {
 						timeout_ms = 500,
 						lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
