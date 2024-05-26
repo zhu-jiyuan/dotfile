@@ -64,6 +64,7 @@ return {
 					["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior, count = 1 }),
 					["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior, count = 1 }),
 					["<C-c>"] = function()
+						luasnip.unlink_current()
 						cmp.mapping.close()
 						vim.api.nvim_command("stopinsert")
 					end,
@@ -90,9 +91,10 @@ return {
 					["<C-Space>"] = cmp.mapping(function(fallback)
 						if copilot_suggestion.is_visible() then
 							copilot_suggestion.accept()
+						else
+							fallback()
 						end
-						fallback()
-					end, { "i", "s", "c" }),
+					end, { "i" }),
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
