@@ -1,4 +1,5 @@
 local map = vim.keymap.set
+local Runcode = require("runcode")
 
 -- opt args
 local opt = { noremap = true, silent = true }
@@ -26,6 +27,10 @@ map("n", " ", "<NOP>", opt)
 
 -- nvim-tree
 map("n", "<leader>e", ":Oil<CR>", opt)
+
+-- run code
+map("n", "<F5>", Runcode.runcode, opt)
+
 
 -- bufferline
 -- map('n', '<leader>1' , ':BufferLineGoToBuffer 1<CR>', opt)
