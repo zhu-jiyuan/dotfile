@@ -32,6 +32,9 @@ alias gp='git push'
 alias gcmsg='git commit -m'
 alias gl='git pull'
 
+# z
+alias zi='z -t -I .'
+
 # batcat
 alias bat='batcat'
 
@@ -62,4 +65,7 @@ off_proxy () {
   echo "HTTP Proxy off"
 }
 
-
+# wsl2
+open_ex(){
+    explorer.exe .
+}

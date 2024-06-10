@@ -50,7 +50,6 @@ return {
 		version = "*",
 		config = true,
 	},
-
 	-- nvim 0.10 is support this plugin.
 	-- {
 	--     'numToStr/Comment.nvim',
