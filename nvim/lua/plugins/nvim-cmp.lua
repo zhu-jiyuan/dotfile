@@ -40,6 +40,7 @@ return {
 				},
 			},
 			"neovim/nvim-lspconfig",
+			"onsails/lspkind-nvim",
 		},
 		config = function()
 			require("luasnip.loaders.from_vscode").lazy_load()
@@ -53,6 +54,20 @@ return {
 					expand = function(args)
 						luasnip.lsp_expand(args.body) -- For `luasnip` users.
 					end,
+				},
+				formatting = {
+					format = require("lspkind").cmp_format({
+						maxwidth = 30,
+						mode = "symbol_text",
+						menu = {
+							path = "[PATH]",
+							buffer = "[BUF]",
+							nvim_lsp = "[LSP]",
+							nvim_lua = "[LUA]",
+							luasnip = "[SNIP]",
+						},
+						ellipsis_char = "…",
+					}),
 				},
 				window = {
 					completion = cmp.config.window.bordered(),
