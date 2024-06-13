@@ -44,6 +44,9 @@ if [ ! -L ~/.local/bin/fd ] && command -v fdfind &>/dev/null; then
     ln -s "$(command -v fdfind)" ~/.local/bin/fd
 fi
 
+# wsl
+alias open_ex='explorer.exe'
+
 
 ############### tools function #################
 
@@ -65,7 +68,3 @@ off_proxy () {
   echo "HTTP Proxy off"
 }
 
-# wsl2
-open_ex(){
-    explorer.exe .
-}
