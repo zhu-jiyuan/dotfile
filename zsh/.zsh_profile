@@ -1,7 +1,7 @@
 ############### PATH #################
 addToPathFront /usr/local/go/bin
 addToPathFront $HOME/.local/bin
-
+addToPathFront $HOME/.local/kitty.app/bin
 
 ############### ENV ##################
 
