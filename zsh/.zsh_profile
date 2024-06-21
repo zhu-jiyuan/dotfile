@@ -7,8 +7,8 @@ addToPathFront $HOME/.local/kitty.app/bin
 
 # export LANG=en_US.UTF-8
 # fzf
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+# use github install fzf, and add fzf to zsh.
+source <(fzf --zsh)
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 ############### alias #################
@@ -47,6 +47,8 @@ fi
 # wsl
 alias open_ex='explorer.exe'
 
+# fzf
+alias fzfp='fzf --preview "batcat --color=always {}"'
 
 ############### tools function #################
 
@@ -66,5 +68,15 @@ off_proxy () {
   unset http_proxy
   unset https_proxy
   echo "HTTP Proxy off"
+}
+
+# yazi warp to cwd
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
