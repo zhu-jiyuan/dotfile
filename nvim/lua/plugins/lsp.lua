@@ -1,3 +1,5 @@
+local custom = require("custom")
+
 local server_list = {
 	lua_ls = {
 		settings = {
@@ -6,6 +8,7 @@ local server_list = {
 	},
 	pyright = {},
 	jsonls = {},
+    gopls = {},
 }
 
 local on_attach = function(_, bufnr)
@@ -107,10 +110,10 @@ local on_attach = function(_, bufnr)
 	vim.diagnostic.config({
 		signs = {
 			text = {
-				[vim.diagnostic.severity.ERROR] = "🥶",
-				[vim.diagnostic.severity.WARN] = "🧐",
-				[vim.diagnostic.severity.INFO] = "🫠",
-				[vim.diagnostic.severity.HINT] = "🤔",
+				[vim.diagnostic.severity.ERROR] = custom.symbol.error,
+				[vim.diagnostic.severity.WARN] = custom.symbol.warn,
+				[vim.diagnostic.severity.INFO] = custom.symbol.info,
+				[vim.diagnostic.severity.HINT] = custom.symbol.hint,
 			},
 		},
 	})
@@ -123,7 +126,6 @@ return {
 		dependencies = {
 			{ "folke/neodev.nvim", opts = {} },
 			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-			{ "j-hui/fidget.nvim", opts = {} },
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
