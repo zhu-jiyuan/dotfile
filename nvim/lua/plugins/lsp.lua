@@ -23,13 +23,16 @@ local on_attach = function(_, bufnr)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
 
-	-- nmap('<leader>rn', "<cmd>Lspsaga rename ++project<CR>", '[R]e[n]ame')
-	nmap("<leader>rn", function()
-		vim.lsp.buf.rename()
-	end, "[R]e[n]ame")
-	nmap("<leader>ca", function()
-		vim.lsp.buf.code_action()
-	end, "[C]ode [A]ction")
+	-- nmap("<leader>rn", function()
+	-- 	vim.lsp.buf.rename()
+	-- end, "[R]e[n]ame")
+	-- nmap("<leader>ca", function()
+	-- 	vim.lsp.buf.code_action()
+	-- end, "[C]ode [A]ction")
+
+	nmap("<leader>rn", "<cmd>Lspsaga rename ++project<cr>", "Rename")
+	nmap("<leader>ca", "<cmd>Lspsaga code_action<CR>", "Code Action")
+	nmap("<leader>ot", "<cmd>Lspsaga outline<CR>", "OutLine")
 
 	local fzf_lua = require("fzf-lua")
 	nmap("gd", fzf_lua.lsp_definitions, "[G]oto [D]efinition")
@@ -40,10 +43,13 @@ local on_attach = function(_, bufnr)
 	nmap("<leader>ws", fzf_lua.lsp_live_workspace_symbols, "[W]orkspace [S]ymbols")
 
 	-- See `:help K` for why this keymap
-	nmap("K", function()
-		vim.lsp.buf.hover()
-	end, "Hover Documentation")
-	nmap("<C-h>", vim.lsp.buf.signature_help, "Signature Documentation")
+	-- nmap("K", function()
+	-- 	vim.lsp.buf.hover()
+	-- end, "Hover Documentation")
+	nmap("<leader>K", "<cmd>Lspsaga hover_doc<CR>", "Hover Documentation")
+	nmap("<leader>pd", "<cmd>Lspsaga peek_definition<CR>", "Peek Definition")
+
+	nmap("<leader>H", vim.lsp.buf.signature_help, "Signature Documentation")
 
 	-- Lesser used LSP functionality
 	nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
@@ -55,13 +61,59 @@ local on_attach = function(_, bufnr)
 
 	-- Create a command `:Format` local to the LSP buffer
 	nmap("<leader>fm", function()
-		-- vim.lsp.buf.format({
-		-- 	async = true,
-		-- })
 		require("conform").format({ async = true, lsp_fallback = true })
 	end, "Format current buffer")
+
 	-- lsp diagnostics
 	nmap("<leader>da", fzf_lua.lsp_workspace_diagnostics, "lsp diagnosticls")
+
+	require("lspsaga").setup({
+		outline = {
+			keys = {
+				quit = "Q",
+				toggle_or_jump = "<cr>",
+			},
+		},
+		finder = {
+			keys = {
+				quit = "Q",
+				edit = "<C-o>",
+				toggle_or_open = "<cr>",
+			},
+		},
+		definition = {
+			keys = {
+				edit = "<C-o>",
+				vsplit = "<C-v>",
+			},
+		},
+		code_action = {
+			keys = {
+				quit = "Q",
+			},
+		},
+		ui = {
+			code_action = "🔅",
+		},
+		lightbulb = {
+			enable = true,
+			sign = true,
+			debounce = 10,
+			sign_priority = 40,
+			virtual_text = false,
+			enable_in_insert = true,
+		},
+	})
+	vim.diagnostic.config({
+		signs = {
+			text = {
+				[vim.diagnostic.severity.ERROR] = "🥶",
+				[vim.diagnostic.severity.WARN] = "🧐",
+				[vim.diagnostic.severity.INFO] = "🫠",
+				[vim.diagnostic.severity.HINT] = "🤔",
+			},
+		},
+	})
 end
 
 return {
@@ -75,7 +127,7 @@ return {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			-- 'nvimdev/lspsaga.nvim',
+			"nvimdev/lspsaga.nvim",
 		},
 		-- opts = {
 		-- 	autoformat = false,
