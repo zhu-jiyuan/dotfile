@@ -18,6 +18,7 @@ return {
 					"python",
 					"markdown",
 					"bash",
+                    "go",
 				},
 				ignore_install = {},
 				sync_install = false,
