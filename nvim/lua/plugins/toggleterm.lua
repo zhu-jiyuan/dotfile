@@ -64,7 +64,7 @@ return {
                 desc = "LazyGit",
             },
             {
-                "<leader>gf",
+                "<leader>gy",
                 function()
                     yazi:toggle()
                 end,

@@ -1,6 +1,7 @@
 local config = {
     lua = "lua %",
     python = "python3 %",
+    go = "go run %",
 }
 
 local M = {}
