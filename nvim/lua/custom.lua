@@ -5,7 +5,7 @@ M.border = "rounded"
 
 M.symbol = {
     error = "❌",
-    warn = "❗️",
+    warn = "❗",
     info = "👀",
     hint = "🍋",
     code_action = "✨"
