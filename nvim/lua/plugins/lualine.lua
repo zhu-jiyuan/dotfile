@@ -223,7 +223,7 @@ return {
     end,
     dependencies = {
         { "nvim-tree/nvim-web-devicons" },
-        { "ofseed/copilot-status.nvim" },
+        -- { "ofseed/copilot-status.nvim" },
     },
     config = function()
         require("lualine").setup(opts)

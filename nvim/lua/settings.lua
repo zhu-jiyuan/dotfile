@@ -124,3 +124,8 @@ option.foldlevelstart = 99
 --
 global.mapleader = " "
 global.maplocalleader = " "
+
+-- vimgrep
+global.grepprg = "rg --vimgrep --smart-case"
+global.grepformat = "%f:%l:%c:%m"
+

@@ -22,9 +22,8 @@ local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
         if desc then
             desc = "LSP: " .. desc
-        end
-
-        vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+    end
+    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
     end
 
     -- nmap("<leader>rn", function()
@@ -103,9 +102,9 @@ local on_attach = function(_, bufnr)
             enable = true,
             sign = true,
             debounce = 10,
-            sign_priority = 40,
+            sign_priority = 1,
             virtual_text = false,
-            enable_in_insert = true,
+            -- enable_in_insert = true,
         },
         hover = {
             keys = {
