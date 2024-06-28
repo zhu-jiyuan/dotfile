@@ -15,7 +15,8 @@ return {
     -- tip key
     {
         "folke/which-key.nvim",
-        event = "VimEnter",
+        event = "BufReadPre",
+        -- event = "VimEnter",
         init = function()
             vim.o.timeout = true
             vim.o.timeoutlen = 1000
@@ -43,9 +44,12 @@ return {
             -- refer to the configuration section below
         },
     },
+
     {
         "LunarVim/bigfile.nvim",
+        event = "BufReadPre", -- this will only start session saving when an actual file was opened
     },
+    
     {
         "christoomey/vim-tmux-navigator",
         cmd = {
@@ -90,6 +94,7 @@ return {
             },
         },
     },
+
     -- install without yarn or npm
     {
         "iamcco/markdown-preview.nvim",
