@@ -46,7 +46,8 @@ return {
     {
         "utilyre/barbecue.nvim",
         name = "barbecue",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
+        event = "BufReadPost",
         version = "*",
         dependencies = {
             "SmiteshP/nvim-navic",
@@ -60,7 +61,8 @@ return {
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
-        event = "VeryLazy",
+        event = "BufReadPost",
+        -- event = "VeryLazy",
         opts = {},
         --     config = function()
         --         local highlight = {
