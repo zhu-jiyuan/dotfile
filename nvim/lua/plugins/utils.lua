@@ -94,6 +94,14 @@ return {
             },
         },
     },
+
+    -- install without yarn or npm
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        ft = { "markdown" },
+        build = function() vim.fn["mkdp#util#install"]() end,
+    }
     -- nvim 0.10 is support this plugin.
     -- {
     --     'numToStr/Comment.nvim',
