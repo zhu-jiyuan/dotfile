@@ -1,6 +1,13 @@
+
+local M = {}
 local option = vim.opt
 local buffer = vim.b
 local global = vim.g
+
+M.option = option
+M.buffer = buffer
+M.global = global
+
 
 -- 文件编码格式
 
@@ -79,7 +86,7 @@ option.backup = false
 option.writebackup = false
 option.swapfile = false
 -- 换行显示
-option.wrap = true
+option.wrap = false
 
 -- smaller updatetime
 option.updatetime = 300
@@ -106,14 +113,14 @@ option.wildmenu = true
 -- opt.shortmess = vim.o.shortmess .. "c"
 
 -- 代码折叠
-option.foldmethod = "expr"
-option.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-option.foldcolumn = "1"
--- opt.foldtext = ""
-
-option.foldnestmax = 3
-option.foldlevel = 99
-option.foldlevelstart = 99
+-- option.foldmethod = "expr"
+-- option.foldexpr = "nvim_treesitter#foldexpr()"
+-- option.foldcolumn = "1"
+-- -- opt.foldtext = ""
+--
+-- option.foldnestmax = 3
+-- option.foldlevel = 99
+-- option.foldlevelstart = 10
 
 -- option.exrc = true
 -- 补全显示10行
@@ -128,4 +135,7 @@ global.maplocalleader = " "
 -- vimgrep
 global.grepprg = "rg --vimgrep --smart-case"
 global.grepformat = "%f:%l:%c:%m"
+
+
+return M
 
