@@ -26,6 +26,7 @@ setopt INC_APPEND_HISTORY
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 export SAVEHIST=655350
+export GLFW_IM_MODULE=ibus
 
 source $ZSH/.zsh_profile
 [[ ! -f $HOME/.zsh_custom ]] || source $HOME/.zsh_custom

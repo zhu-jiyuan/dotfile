@@ -50,6 +50,11 @@ alias open_ex='explorer.exe'
 # fzf
 alias fzfp='fzf --preview "batcat --color=always {}"'
 
+#kitty terminal
+if command -v kitty > /dev/null 2>&1; then
+    export TERMINAL=kitty
+fi
+
 ############### tools function #################
 
 # tool function
