@@ -1,0 +1,28 @@
+
+# soft depencies
+# The higher the level, the higher the priority.
+ 
+[necessary]
+
+common = [
+    "fd", "git", "fzf",
+    "vim", "ripgrep",
+    "batcat", "zsh",
+    "feh", "xclip",
+    "picom", "udisks3", "udiskie"
+]
+
+[fd]
+
+[fd.apt]
+package="fd-find"
+
+[fzf]
+[fzf.git]
+level=999
+cmd = [
+    "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf",
+    "~/.fzf/install"
+]
+
+
