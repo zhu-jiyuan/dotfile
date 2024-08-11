@@ -33,7 +33,7 @@ local on_attach = function(_, bufnr)
     -- 	vim.lsp.buf.code_action()
     -- end, "[C]ode [A]ction")
 
-    nmap("<leader>rn", "<cmd>Lspsaga rename ++project<cr>", "Rename")
+    nmap("<leader>rn", "<cmd>Lspsaga rename<cr>", "Rename")
     nmap("<leader>ca", "<cmd>Lspsaga code_action<CR>", "Code Action")
     nmap("<leader>ot", "<cmd>Lspsaga outline<CR>", "OutLine")
 
@@ -115,6 +115,7 @@ local on_attach = function(_, bufnr)
             keys = {
                 quit = "<C-c>",
             },
+            in_select = false,
         },
     })
     vim.diagnostic.config({

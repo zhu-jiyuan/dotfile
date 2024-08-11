@@ -15,6 +15,10 @@ return {
             { "<leader>fh", ":FzfLua help_tags<CR>",                    desc = "help_tags" },
             { "<leader>/",  ":FzfLua lgrep_curbuf resume=true<CR>",     desc = "help_tags" },
             { "<leader>fw", ":FzfLua grep_cword<CR>",                   desc = "grep_cword" },
+            { "<leader>fW", ":FzfLua grep_cWORD<CR>",                   desc = "grep_cWORD" },
+            { "<leader>gst", ":FzfLua git_status<CR>",                   desc = "git_status" },
+            { "<leader>gb", ":FzfLua git_branches<CR>",                   desc = "git_status" },
+
         },
         config = function()
             -- calling `setup` is optional for customization
