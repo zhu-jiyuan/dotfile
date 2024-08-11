@@ -26,6 +26,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
             option.foldnestmax = 3
             option.foldlevel = 99
             option.foldlevelstart = 99
-        end, 100)
+        end, 150)
     end,
 })
