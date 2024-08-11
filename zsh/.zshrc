@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
+export DWM="$HOME/.dwm"
 autoload -U compinit; compinit
 ## ENV ##
 
@@ -16,6 +17,11 @@ addToPathFront() {
 }
 
 export ZSH="$HOME/.config/zsh"
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export SDL_IM_MODULE=fcitx
+export INPUT_METHOD=fcitx
 
 export HISTFILE=~/.zsh_history
 setopt INC_APPEND_HISTORY
