@@ -16,3 +16,6 @@
 [submodule "zsh/plugins/zlua"]
 	path = zsh/plugins/zlua
 	url = https://github.com/skywind3000/z.lua.git
+[submodule "nvim"]
+	path = nvim
+	url = git@github.com:zhu-jiyuan/nvim.git
