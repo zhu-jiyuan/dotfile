@@ -1,13 +1,3 @@
-/*
-!zsh
-!bin
-!nvim
-!tmux
-!wezterm
-!install.sh
-!README.md
-!kitty
-!yazi
 
 zsh/.zsh_history
 tmux/plugins/*
