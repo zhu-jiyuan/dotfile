@@ -55,6 +55,8 @@ fi
 # wsl
 alias open_ex='explorer.exe'
 
+alias lg='lazygit'
+
 # fzf
 alias fzfp='fzf --preview "batcat --color=always {}"'
 
