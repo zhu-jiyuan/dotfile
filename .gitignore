@@ -6,5 +6,5 @@ zsh/plugins/*
 !zsh/plugins/sudo
 zsh/themes/powerlevel10k
 tmux/plugins/tpm
-./nvim/lazy-lock.json
 
+nvim
