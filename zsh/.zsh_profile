@@ -5,7 +5,15 @@ addToPathFront $HOME/.local/kitty.app/bin
 addToPathFront $HOME/.cargo/bin
 
 ############### ENV ##################
+OS=$(uname -s)
 
+# batcat
+# 判断是否是Arch Linux
+if [ "$OS" = "Linux" ] && [ ! -f /etc/arch-release ]; then
+    alias bat="batcat"
+else
+    alias bat="bat"
+fi
 # export LANG=en_US.UTF-8
 # fzf
 # use github install fzf, and add fzf to zsh.
@@ -36,8 +44,7 @@ alias gl='git pull'
 # z
 alias zi='z -t -I .'
 
-# batcat
-alias bat='batcat'
+# alias bat='batcat'
 
 # fd
 alias fd='fdfind'
