@@ -1,0 +1,25 @@
+
+
+[user]
+    name = JiYuan
+    email = olderfe66@gmail.com
+
+[core]
+    editor = nvim
+
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+    up = pull -r
+
+[color]
+    ui = auto
+
+[pull]
+    rebase = true
+
+
+
+
