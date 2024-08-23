@@ -3,6 +3,8 @@ addToPathFront /usr/local/go/bin
 addToPathFront $HOME/.local/bin
 addToPathFront $HOME/.local/kitty.app/bin
 addToPathFront $HOME/.cargo/bin
+addToPathFront /opt/cuda/bin/
+addToEnvFront LD_LIBRARY_PATH /opt/cuda/lib64
 
 ############### ENV ##################
 OS=$(uname -s)
