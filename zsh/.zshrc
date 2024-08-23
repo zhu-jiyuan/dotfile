@@ -10,10 +10,21 @@ export DWM="$HOME/.dwm"
 autoload -U compinit; compinit
 ## ENV ##
 
-addToPathFront() {
-  if [[ ! "$PATH" == *"$1"* ]]; then
-    export PATH="$1:$PATH"
+addToEnvFront() {
+    local var_name="$1" local new_value="$2"
+    # Get the current value of the variable
+    # echo "$var_name"
+    # local current_value="${!var_name}"
+    eval "current_value=\$$var_name"
+
+  # Check if the new value is already part of the variable
+  if [[ ! "$current_value" == *"$new_value"* ]]; then
+      export "$var_name"="$new_value:$current_value"
   fi
+}
+
+addToPathFront() {
+  addToEnvFront "PATH" $1
 }
 
 export ZSH="$HOME/.config/zsh"
