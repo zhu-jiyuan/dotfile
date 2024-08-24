@@ -19,3 +19,5 @@
 [submodule "nvim"]
 	path = nvim
 	url = git@github.com:zhu-jiyuan/nvim.git
+    ignore = dirty
+
