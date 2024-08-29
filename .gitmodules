@@ -21,3 +21,6 @@
 	url = git@github.com:zhu-jiyuan/nvim.git
     ignore = dirty
 
+[submodule "zsh/plugins/fzf-tab"]
+	path = zsh/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab
