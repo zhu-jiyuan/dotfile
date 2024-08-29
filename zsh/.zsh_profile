@@ -3,7 +3,8 @@ addToPathFront /usr/local/go/bin
 addToPathFront $HOME/.local/bin
 addToPathFront $HOME/.local/kitty.app/bin
 addToPathFront $HOME/.cargo/bin
-addToPathFront /opt/cuda/bin/
+addToPathFront /opt/cuda/bin
+addToPathFront /usr/bin
 addToEnvFront LD_LIBRARY_PATH /opt/cuda/lib64
 
 ############### ENV ##################
@@ -55,7 +56,8 @@ if [ ! -L ~/.local/bin/fd ] && command -v fdfind &>/dev/null; then
 fi
 
 # wsl
-alias open_ex='explorer.exe'
+# alias open_ex='explorer.exe'
+
 
 alias lg='lazygit'
 
@@ -95,5 +97,16 @@ function yy() {
 		cd -- "$cwd"
 	fi
 	rm -f -- "$tmp"
+}
+
+function open_ex() {
+    local path=${1:-.}  # 如果没有传递参数，则默认使用当前目录
+    if command -v explorer.exe &> /dev/null; then
+        explorer.exe "$path"
+    elif command -v /usr/bin/thunar &> /dev/null; then
+        /usr/bin/thunar "$path"
+    else
+        echo "Neither explorer.exe nor thunar found."
+    fi
 }
 
