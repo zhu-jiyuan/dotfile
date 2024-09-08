@@ -13,6 +13,7 @@
     ci = commit
     st = status
     up = pull -r
+    sw = switch
 
 [color]
     ui = auto
