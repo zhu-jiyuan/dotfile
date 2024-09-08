@@ -20,6 +20,23 @@
 [pull]
     rebase = true
 
+[merge]
+  tool = diffview
+[mergetool]
+  prompt = false
+  keepBackup = false
+
+[mergetool "diffview"]
+  cmd = nvim -n -c "DiffviewOpen" "$MERGE"
+
+[difftool]
+    prompt = false
+
+[diff]
+    tool = nvimdiff
+
+[difftool "nvimdiff"]
+    cmd = nvim -d -c 'DiffviewOpen HEAD %1 %2'
 
 
 
