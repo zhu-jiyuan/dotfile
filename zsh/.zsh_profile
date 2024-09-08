@@ -69,6 +69,8 @@ if command -v kitty > /dev/null 2>&1; then
     export TERMINAL=kitty
 fi
 
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
+
 ############### tools function #################
 
 # tool function
