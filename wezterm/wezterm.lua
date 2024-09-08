@@ -10,9 +10,9 @@ local wsl_domains = wezterm.default_wsl_domains()
 for _, domain in ipairs(wsl_domains) do
     domain.default_prog = { "zsh" }
 end
-config.default_domain = "WSL:Debian"
-config.wsl_domains = wsl_domains
-
+-- config.default_domain = "WSL:Debian"
+-- config.wsl_domains = wsl_domains
+--
 
 -- fps
 config.animation_fps = 120
