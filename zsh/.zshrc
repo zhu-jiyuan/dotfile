@@ -88,5 +88,6 @@ fpath=($ZSH/plugins/zsh-completions/src $fpath)
 # eval "$(lua $ZSH/plugins/zlua/z.lua --init zsh enhanced once echo fzf)"
 eval "$(zoxide init zsh)"
 source $ZSH/plugins/sudo/sudo.zsh
+source $ZSH/plugins/ssh_tab.sh
 
 
