@@ -16,11 +16,6 @@
 [submodule "zsh/plugins/zlua"]
 	path = zsh/plugins/zlua
 	url = https://github.com/skywind3000/z.lua.git
-[submodule "nvim"]
-	path = nvim
-	url = git@github.com:zhu-jiyuan/nvim.git
-    ignore = dirty
-
 [submodule "zsh/plugins/fzf-tab"]
 	path = zsh/plugins/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab
