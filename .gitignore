@@ -8,4 +8,4 @@ zsh/plugins/*
 zsh/themes/powerlevel10k
 tmux/plugins/tpm
 
-nvim
+nvim/
