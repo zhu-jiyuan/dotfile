@@ -6,7 +6,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
+# dwm
 export DWM="$HOME/.dwm"
+
 autoload -U compinit; compinit
 ## ENV ##
 
@@ -66,28 +68,37 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 
 ############## load theme ################
-source $ZSH/themes/powerlevel10k/powerlevel10k.zsh-theme
 # config man theme
 # Depend on bat
 export MANPAGER='sh -c "col -bx | bat -pl man --theme=Monokai\ Extended"'
 export MANROFFOPT='-c'
 
-[[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
+############## zimfw ################
+
+# set zimfw
+export ZIM_CONFIG_FILE=~/.config/zsh/zimrc
+export ZIM_HOME=~/.cache/zim
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+
 
 ############## plugins #################
-#fzf-tab
-source $ZSH/plugins/fzf-tab/fzf-tab.plugin.zsh
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort false
 
-#other
-source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-fpath=($ZSH/plugins/zsh-completions/src $fpath)
-# eval "$(zoxide init zsh)"
-# eval "$(lua $ZSH/plugins/zlua/z.lua --init zsh enhanced once echo fzf)"
 eval "$(zoxide init zsh)"
-source $ZSH/plugins/sudo/sudo.zsh
+source $ZSH/plugins/sudo.zsh
 source $ZSH/plugins/ssh_tab.sh
 
+[[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
 
