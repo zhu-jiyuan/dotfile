@@ -1,11 +1,6 @@
 
 zsh/.zsh_history
+
 tmux/plugins/*
-zsh/plugins/*
+
 nvim/
-
-
-!zsh/plugins/sudo
-!zsh/plugins/ssh_tab.sh
-zsh/themes/powerlevel10k
-
