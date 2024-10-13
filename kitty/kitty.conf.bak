@@ -1,17 +1,17 @@
 # BEGIN_KITTY_THEME
-# Everforest Light Medium
+# Gruvbox Dark Hard
 include current-theme.conf
 term xterm-256color
 # END_KITTY_THEME
 #
 
 # font settings
-font_size 15
+font_size 14
 font_family      JetBrainsMono Nerd Font
 # chinese font
 # symbol_map U+4E00-U+9FFF,U+3400-U+4DBF Sarasa Mono SC
 include mapfont.conf
-# cursor none
+cursor none
 
 # disable_ligatures cursor
 disable_ligatures always
@@ -29,7 +29,7 @@ hide_window_decorations titlebar-only
 #
 #background_image ./background.png
 
-background_opacity 1
+background_opacity 0.9
 
 background_blur 30
 
