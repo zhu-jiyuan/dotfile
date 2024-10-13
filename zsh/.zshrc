@@ -6,12 +6,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
+
 # dwm
 export DWM="$HOME/.dwm"
 
-autoload -U compinit; compinit
-## ENV ##
+#autoload -U compinit; compinit
 
+## ENV ##
 addToEnvFront() {
     local var_name="$1" local new_value="$2"
     # Get the current value of the variable
@@ -64,8 +65,6 @@ setopt HIST_FIND_NO_DUPS
 
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# set tab color
-zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 
 ############## load theme ################
 # config man theme
@@ -73,32 +72,33 @@ zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:
 export MANPAGER='sh -c "col -bx | bat -pl man --theme=Monokai\ Extended"'
 export MANROFFOPT='-c'
 
-############## zimfw ################
-
-# set zimfw
-export ZIM_CONFIG_FILE=~/.config/zsh/zimrc
-export ZIM_HOME=~/.cache/zim
-# Download zimfw plugin manager if missing.
-if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-      https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-fi
-# Install missing modules and update ${ZIM_HOME}/init.zsh if missing or outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZIM_CONFIG_FILE:-${ZDOTDIR:-${HOME}}/.zimrc} ]]; then
-  source ${ZIM_HOME}/zimfw.zsh init -q
-fi
-
-# Initialize modules.
-source ${ZIM_HOME}/init.zsh
-
+############## zinit ################
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+[ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
+[ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+source "${ZINIT_HOME}/zinit.zsh"
 
 ############## plugins #################
+#compinit before
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-completions
+zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+
+autoload -U compinit && compinit
+
+zinit ice depth"1" # git clone depth
+zinit light romkatv/powerlevel10k
+zinit light zsh-users/zsh-autosuggestions
+
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort false
 
 eval "$(zoxide init zsh)"
 source $ZSH/plugins/sudo.zsh
 source $ZSH/plugins/ssh_tab.sh
+source $ZSH/fzf-theme.zsh
 
 [[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
 
