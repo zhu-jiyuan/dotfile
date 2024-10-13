@@ -1,0 +1,38 @@
+# BEGIN_KITTY_THEME
+# Gruvbox Dark Hard
+include current-theme.conf
+term xterm-256color
+# END_KITTY_THEME
+#
+
+# font settings
+font_size 14
+font_family      JetBrainsMono Nerd Font
+# chinese font
+# symbol_map U+4E00-U+9FFF,U+3400-U+4DBF Sarasa Mono SC
+include mapfont.conf
+cursor none
+
+# disable_ligatures cursor
+disable_ligatures always
+
+
+touch_scroll_multiplier 2.0
+copy_on_select yes
+
+enable_audio_bell no
+
+# windows
+hide_window_decorations titlebar-only
+
+#windows_padding_width 15
+#
+#background_image ./background.png
+
+background_opacity 0.9
+
+background_blur 30
+
+remember_window_size yes
+
+scrollback_lines 20000

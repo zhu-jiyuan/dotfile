@@ -14,6 +14,8 @@ export SDL_IM_MODULE=fcitx
 export INPUT_METHOD=fcitx
 export DWM=~/.dwm
 xrandr --output HDMI-0 --mode 1920x1080 --rate 120 --primary
+# mouse dpi
+xinput --set-prop 10 'libinput Accel Speed' -0.3
 
 
 exec dwm
