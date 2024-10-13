@@ -1,7 +1,10 @@
-zmodule zsh-users/zsh-autosuggestions
-zmodule zdharma-continuum/fast-syntax-highlighting
-zmodule zsh-users/zsh-completions --fpath src
+# completion before
 zmodule Aloxaf/fzf-tab
+zmodule zsh-users/zsh-completions --fpath src
+zmodule zdharma-continuum/fast-syntax-highlighting
+
+zmodule completion
 
 zmodule romkatv/powerlevel10k
+zmodule zsh-users/zsh-autosuggestions
 
