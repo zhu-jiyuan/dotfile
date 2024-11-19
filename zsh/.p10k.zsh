@@ -42,7 +42,7 @@
   # last prompt line gets hidden if it would overlap with left prompt.
   typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
     status                  # exit code of the last command
-    command_execution_time  # duration of the last command
+    # command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
     asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
@@ -100,7 +100,7 @@
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     per_directory_history   # Oh My Zsh per-directory-history local/global indicator
     # cpu_arch              # CPU architecture
-    time                    # current time
+    # time                    # current time
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
     # proxy                 # system-wide http/https/ftp proxy
@@ -278,7 +278,7 @@
 
   # Enable special styling for non-writable and non-existent directories. See POWERLEVEL9K_LOCK_ICON
   # and POWERLEVEL9K_DIR_CLASSES below.
-  typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=v3
+  typeset -g POWERLEVEL9K_DIR_SHOW_WRITABLE=false
 
   # The default icon shown next to non-writable and non-existent directories when
   # POWERLEVEL9K_DIR_SHOW_WRITABLE is set to v3.

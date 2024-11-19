@@ -94,6 +94,7 @@ zinit light zsh-users/zsh-autosuggestions
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 eval "$(zoxide init zsh)"
 source $ZSH/plugins/sudo.zsh
