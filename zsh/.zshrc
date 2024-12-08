@@ -69,7 +69,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ############## load theme ################
 # config man theme
 # Depend on bat
-export MANPAGER='sh -c "col -bx | bat -pl man --theme=Monokai\ Extended"'
+export MANPAGER='sh -c "col -bx | bat -pl man --theme=OneHalfLight"'
 export MANROFFOPT='-c'
 
 ############## zinit ################
