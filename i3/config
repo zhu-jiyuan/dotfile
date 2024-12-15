@@ -38,6 +38,7 @@ exec --no-startup-id picom # 启动 picom
 exec_always feh --no-fehbg --bg-fill '/home/pig/.config/wallpaper/01.png'
 exec --no-startup-id dunst & # 桌面通知
 exec --no-startup-id fcitx5 & # fcitx5 输入法
+exec --no-startup-id xmodmap /home/pig/.Xmodmap
 
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui # 设置火焰截图
 bindsym $mod+p exec --no-startup-id "$HOME/.config/rofi/powermenu.sh"
@@ -201,3 +202,4 @@ bar {
 
 ## app
 for_window [class="QQ"] floating enable
+for_window [class="TelegramDesktop"] floating enable
