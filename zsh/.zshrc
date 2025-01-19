@@ -36,6 +36,8 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export INPUT_METHOD=fcitx
+export GLFW_IM_MODULE=ibus
+GLFW_IM_MODULE=ibus
 
 export HISTFILE=~/.zsh_history
 setopt INC_APPEND_HISTORY
@@ -46,7 +48,6 @@ setopt INC_APPEND_HISTORY
 export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 export SAVEHIST=655350
-export GLFW_IM_MODULE=ibus
 
 source $ZSH/.zsh_profile
 [[ ! -f $HOME/.zsh_custom ]] || source $HOME/.zsh_custom
@@ -77,6 +78,7 @@ ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 source "${ZINIT_HOME}/zinit.zsh"
+export ZINIT_ALIAS="zii"
 
 ############## plugins #################
 #compinit before
@@ -97,6 +99,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 eval "$(zoxide init zsh)"
+alias zi='__zoxide_zi'
 source $ZSH/plugins/sudo.zsh
 source $ZSH/plugins/ssh_tab.sh
 source $ZSH/fzf-theme.zsh
