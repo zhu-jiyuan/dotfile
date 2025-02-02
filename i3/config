@@ -201,5 +201,7 @@ bar {
 }
 
 ## app
+# use xprop to get class name
 for_window [class="QQ"] floating enable
 for_window [class="TelegramDesktop"] floating enable
+for_window [class="discord"] floating enable
