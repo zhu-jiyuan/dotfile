@@ -1,5 +1,5 @@
 [manager]
-linemode    = "ctime"
+linemode    = "mtime"
 show_hidden = true
 
 
