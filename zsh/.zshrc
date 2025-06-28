@@ -87,6 +87,10 @@ zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
 
+# docker
+FPATH="$HOME/.docker/completions:$FPATH"
+# zinit light mwilliammyers/zsh-docker-completion
+
 autoload -U compinit && compinit
 
 zinit ice depth"1" # git clone depth
@@ -98,7 +102,11 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort false
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
-eval "$(zoxide init zsh)"
+# zoxide - smarter cd
+# https://github.com/ajeetdsouza/zoxide
+if command -v zoxide > /dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 alias zi='__zoxide_zi'
 source $ZSH/plugins/sudo.zsh
 source $ZSH/plugins/ssh_tab.sh
@@ -106,3 +114,18 @@ source $ZSH/fzf-theme.zsh
 
 [[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
 
+
+# fnm
+FNM_PATH="/home/ohayo/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/home/ohayo/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
+
+# pyenv
+# https://github.com/pyenv/pyenv#installation
+if command -v pyenv > /dev/null 2>&1; then
+	export PYENV_ROOT="$HOME/.pyenv"
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
