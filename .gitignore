@@ -4,3 +4,6 @@ zsh/.zsh_history
 tmux/plugins/*
 
 nvim/
+emacs/*
+!emacs/init.el
+!emacs/lisp/

@@ -7,7 +7,7 @@ general {
 }
 
 order += "ipv6"
-order += "cpu_temperature 0"
+order += "cpu_temperature 1"
 order += "memory"
 order += "disk /"
 order += "wireless _first_"
@@ -17,7 +17,7 @@ order += "load"
 order += "volume master"
 order += "tztime local"
 
-cpu_temperature 0 {
+cpu_temperature 1 {
         format = "T: %degrees °C"
 }
 
