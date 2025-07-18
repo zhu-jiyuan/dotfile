@@ -49,6 +49,7 @@
 
 (setq ring-bell-function 'ignore)
 (setq mouse-yank-at-point t)
+(setq kill-do-not-save-duplicates t)
 (setq select-enable-primary nil)        ; 选择文字时不拷贝
 (setq select-enable-clipboard t)        ; 拷贝时使用剪贴板
 (xterm-mouse-mode 1)
@@ -82,9 +83,9 @@
   (doom-modeline-unicode-fallback t)
   (doom-modeline-enable-word-count nil))
 
-(use-package minions
-  :ensure t
-  :hook (after-init . minions-mode))
+;(use-package minions
+;  :ensure t
+;  :hook (after-init . minions-mode))
 
 (use-package keycast
   :ensure t
