@@ -1,3 +1,4 @@
+
 ;;; turn off tool bar
 (tool-bar-mode 0)
 (menu-bar-mode 0)
@@ -33,7 +34,7 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("gnu"    . "https://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+;(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (package-initialize)
 
 
@@ -45,6 +46,7 @@
   (require 'init-edit)
   (require 'init-tools)
   (require 'init-org)
+  (require 'init-lsp)
   ;;(require 'init-lsp)
   )
 
@@ -54,9 +56,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ace-window amx company-box consult counsel doom-modeline ef-themes
-		embark-consult flycheck keycast magit marginalia
-		minions mwim orderless org-contrib org-modern vertico)))
+   '(ace-window amx company-box counsel doom-modeline ef-themes
+		embark-consult flycheck keycast lsp-treemacs lsp-ui
+		magit marginalia minions multiple-cursors mwim
+		orderless org-contrib org-modern vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
