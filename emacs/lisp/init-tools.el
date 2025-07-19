@@ -16,6 +16,13 @@
   :hook
   (prog-mode . flycheck-mode))
 
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
 
 (use-package magit
   :ensure t)
@@ -110,7 +117,7 @@
          ("C-c i" . consult-info)
 	 ("C-c r" . consult-recent-file)    ; 最近文件
          ("C-c C-r" . consult-ripgrep)      ; 强制使用 ripgrep
-	 ("C-c f" . consult-find)           ;; orid. find-file, 项目内查找文件
+	 ("C-c f" . consult-fd)           ;; orid. find-file, 项目内查找文件
 	 ("C-c g" . consult-ripgrep)
 	 
          ;; M-g bindings in `goto-map'
@@ -128,7 +135,7 @@
 	 ("M-y" . consult-yank-pop)                ;; orig. yank-pop
 	 
          ;; M-s bindings in `search-map'
-         ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+         ("M-s d" . consult-fd)                  ;; Alternative: consult-fd
          ("M-s c" . consult-locate)
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
