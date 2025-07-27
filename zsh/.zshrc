@@ -122,10 +122,3 @@ if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
 
-# pyenv
-# https://github.com/pyenv/pyenv#installation
-if command -v pyenv > /dev/null 2>&1; then
-	export PYENV_ROOT="$HOME/.pyenv"
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
-fi
