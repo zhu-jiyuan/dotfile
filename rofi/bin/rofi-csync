@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -e
+
+csynctl select -dr 'rofi -i -dmenu -p "󰅍  Clipboard"'
