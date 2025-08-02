@@ -161,8 +161,8 @@ element-text {
     background-color:            transparent;
     text-color:                  inherit;
     cursor:                      inherit;
-    vertical-align:              0.5;
-    horizontal-align:            0.5;
+    vertical-align:              0.4;
+    horizontal-align:            0.4;
 }
 element selected.normal {
     background-color:            var(selected);
