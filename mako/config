@@ -5,7 +5,7 @@ padding=10
 margin=0,20,20
 border-size=2
 border-radius=5
-default-timeout=10000
+default-timeout=5000
 group-by=summary
 
 background-color=#1e1e2e
@@ -16,8 +16,5 @@ progress-color=over #313244
 [urgency=high]
 border-color=#fab387
 
-[flameshot]
-ignore=1
-
-[fcitx5]
-ignore=1
+[app-name=fcitx5]
+ignore-timeout=1
