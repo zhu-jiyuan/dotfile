@@ -2,6 +2,8 @@
 linemode    = "size_and_mtime"
 show_hidden = true
 
+[tasks]
+image_bound = [ 50000, 50000 ]
 
 [opener]
 edit = [
