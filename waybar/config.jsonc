@@ -65,7 +65,7 @@
 			"",
 			""
 		],
-		"tooltip": true
+		"hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
 	},
 	"memory": {
 		"interval": 30,
