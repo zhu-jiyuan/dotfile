@@ -49,6 +49,12 @@ alias gl='git pull'
 
 alias neofetch='fastfetch'
 
+# neovim
+# if use kitty terminal, alias nvim to TERM=xterm-kitty nvim
+if command -v kitty > /dev/null 2>&1; then
+	alias nvim='TERM=xterm-kitty nvim'
+fi
+
 # alias bat='batcat'
 
 # fd

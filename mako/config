@@ -8,6 +8,11 @@ border-radius=5
 default-timeout=5000
 group-by=summary
 
+max-visible=10        # 同时显示的通知数量
+max-history=1000      # 通知历史数量
+layer=overlay         # 避免被遮挡
+max-lines=10          # 增加单个通知可显示的行数
+
 background-color=#1e1e2e
 text-color=#cdd6f4
 border-color=#89b4fa
@@ -18,3 +23,6 @@ border-color=#fab387
 
 [app-name=fcitx5]
 ignore-timeout=1
+
+
+
