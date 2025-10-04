@@ -91,6 +91,28 @@ zinit light zsh-users/zsh-history-substring-search
 FPATH="$HOME/.docker/completions:$FPATH"
 # zinit light mwilliammyers/zsh-docker-completion
 
+# ===================== completions =====================
+# 自定义 completions 目录
+COMPDIR="$HOME/.zsh/completions"
+mkdir -p "$COMPDIR"
+
+# 如果 podman 补全不存在就生成
+if command -v podman >/dev/null 2>&1; then
+  if [[ ! -f "$COMPDIR/_podman" ]]; then
+    podman completion zsh > "$COMPDIR/_podman"
+  fi
+fi
+
+# 如果 docker 补全不存在就生成
+if command -v docker >/dev/null 2>&1; then
+  if [[ ! -f "$COMPDIR/_docker" ]]; then
+    docker completion zsh > "$COMPDIR/_docker"
+  fi
+fi
+
+# 加入到 fpath
+fpath=("$COMPDIR" $fpath)
+
 autoload -U compinit && compinit
 
 zinit ice depth"1" # git clone depth
@@ -99,7 +121,7 @@ zinit light zsh-users/zsh-autosuggestions
 
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':completion:*:git-checkout:*' sort true
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 # zoxide - smarter cd
