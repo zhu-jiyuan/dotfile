@@ -8,10 +8,10 @@ border-radius=5
 default-timeout=5000
 group-by=summary
 
-max-visible=10        # 同时显示的通知数量
-max-history=1000      # 通知历史数量
-layer=overlay         # 避免被遮挡
-max-lines=10          # 增加单个通知可显示的行数
+max-visible=10
+max-history=1000
+layer=overlay
+#max-lines=10
 
 background-color=#1e1e2e
 text-color=#cdd6f4
