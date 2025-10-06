@@ -314,6 +314,28 @@ animations {
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
+
+// Maximized
+window-rule {
+    match app-id="google-chrome"
+    open-maximized true
+}
+
+window-rule{
+	match app-id="pavucontrol"
+	match app-id="blueman"
+	match app-id="nm-connection-editor"
+	match app-id="xdg-desktop-portal-gtk"
+	match app-id="QQ"
+	match app-id="steam"
+	match app-id="discord"
+	match app-id="org.telegram.desktop"
+
+	open-floating true
+	default-column-width { proportion 0.8; }
+	default-window-height { proportion 0.85; }
+}
+
 window-rule {
     // This regular expression is intentionally made as specific as possible,
     // since this is the default config, and we want no false positives.
@@ -327,7 +349,8 @@ window-rule {
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    // match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"google-chrome$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
@@ -454,8 +477,10 @@ binds {
 
     Mod+Page_Down      { focus-workspace-down; }
     Mod+Page_Up        { focus-workspace-up; }
-    Mod+U              { focus-workspace-down; }
-    Mod+I              { focus-workspace-up; }
+    // Mod+U              { focus-workspace-down; }
+    // Mod+I              { focus-workspace-up; }
+    Mod+N              { focus-workspace-down; }
+    Mod+P              { focus-workspace-up; }
     Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
     Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
@@ -585,7 +610,9 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
+
     Mod+W { toggle-column-tabbed-display; }
+	Mod+Tab { spawn "~/.local/bin/niri_fuzzel_window"; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
