@@ -69,6 +69,7 @@ fi
 
 alias lg='lazygit'
 alias ng='nvim +Neogit'
+alias ts='tmux-sessionizer'
 
 # fzf
 alias fzfp='fzf --preview "batcat --color=always {}"'
