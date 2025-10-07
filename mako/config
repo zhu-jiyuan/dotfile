@@ -11,6 +11,7 @@ group-by=summary
 max-visible=10
 max-history=1000
 layer=overlay
+anchor=top-right
 #max-lines=10
 
 background-color=#1e1e2e
