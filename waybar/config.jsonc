@@ -3,7 +3,7 @@
 	"position": "top",
 	"modules-left": [
 		"custom/stream_status",
-		"hyprland/workspaces"
+		"niri/workspaces"
 	],
 	"modules-center": [
 		"clock"
@@ -18,8 +18,8 @@
 		"tray",
 		"custom/lock"
 	],
-	"hyprland/workspaces": {
-		"format": "{name}: {icon}",
+	"niri/workspaces": {
+		// "format": "{name}: {icon}",
 		"format-icons": {
 			"active": "",
 			"default": ""
@@ -65,7 +65,7 @@
 			"",
 			""
 		],
-		"hwmon-path": "/sys/class/hwmon/hwmon6/temp1_input",
+		"thermal-zone": 1
 	},
 	"memory": {
 		"interval": 30,
