@@ -124,6 +124,10 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort true
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
+if command -v kubectl > /dev/null 2>&1; then
+	source <(kubectl completion zsh)
+fi
+
 # zoxide - smarter cd
 # https://github.com/ajeetdsouza/zoxide
 if command -v zoxide > /dev/null 2>&1; then
