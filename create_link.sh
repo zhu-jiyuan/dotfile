@@ -79,5 +79,6 @@ create_symlinks "$PWD/niri" "$config_dir/niri"
 create_symlinks "$PWD/mako" "$config_dir/mako"
 create_symlinks "$PWD/fcitx5" "$config_dir/fcitx5"
 create_symlinks "$PWD/tmux-sessionizer" "$config_dir/tmux-sessionizer"
+create_symlinks "$PWD/emacs" "$config_dir/emacs"
 
 create_symlinks_to_target "$PWD/local" "$HOME/.local"
