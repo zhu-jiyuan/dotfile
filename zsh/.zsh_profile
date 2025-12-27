@@ -123,3 +123,19 @@ function open_ex() {
     fi
 }
 
+function dlogs() {
+        if [ -z "$1" ]; then
+                echo "用法: dlogs <container> [tail_lines]"
+                return 1
+        fi
+        container="$1"
+        lines="${2:-100}"   # 默认显示100行
+        docker logs -f --tail "$lines" "$container"
+}
+function dbash() {
+        if [ -z "$1" ]; then
+                echo "用法: dbash <container>"
+        return 1
+        fi
+        docker exec -it "$1" bash 2>/dev/null || docker exec -it "$1" sh
+}
