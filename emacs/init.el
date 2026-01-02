@@ -1,5 +1,5 @@
-
 ;;; turn off tool bar
+
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (set-frame-font "JetBrainsMono Nerd Font 13" nil t)
@@ -56,10 +56,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(ace-window amx company-box counsel doom-modeline ef-themes
-		embark-consult flycheck keycast lsp-treemacs lsp-ui
-		magit marginalia minions multiple-cursors mwim
-		orderless org-contrib org-modern vertico)))
+   '(company-box doom-modeline ef-themes embark-consult flycheck keycast
+		 lsp-treemacs lsp-ui magit marginalia multiple-cursors
+		 mwim orderless org-contrib org-modern vertico)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
