@@ -110,6 +110,12 @@ if command -v docker >/dev/null 2>&1; then
   fi
 fi
 
+if command -v uv >/dev/null 2>&1; then
+  if [[ ! -f "$COMPDIR/_uv" ]]; then
+	uv generate-shell-completion zsh > "$COMPDIR/_uv"
+  fi
+fi
+
 # 加入到 fpath
 fpath=("$COMPDIR" $fpath)
 
