@@ -65,7 +65,7 @@
 			"",
 			""
 		],
-		"thermal-zone": 1
+		"thermal-zone": 4
 	},
 	"memory": {
 		"interval": 30,
