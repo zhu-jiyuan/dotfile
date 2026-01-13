@@ -70,6 +70,16 @@ input {
     // focus-follows-mouse max-scroll-amount="0%"
 }
 
+// // 笔记本屏
+// output "eDP-1" {
+//     scale 1
+// }
+//
+// // 外接显示器
+// output "HDMI-A-1" {
+//     scale 1.5
+// }
+
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
 // The built-in laptop monitor is usually called "eDP-1".
@@ -318,6 +328,7 @@ animations {
 // Maximized
 window-rule {
     match app-id="google-chrome"
+    match app-id="microsoft-edge"
     open-maximized true
 }
 
@@ -352,6 +363,7 @@ window-rule {
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     // match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     match app-id=r#"google-chrome$"# title="^Picture-in-Picture$"
+    match app-id=r#"microsoft-edge$"# title="^Picture-in-Picture$"
     open-floating true
 }
 
