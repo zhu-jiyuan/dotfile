@@ -5,7 +5,7 @@ theme="Builtin Solarized Light"
 
 mouse-hide-while-typing = true
 font-family             = "JetBrainsMono Nerd Font Mono"
-font-size               = 15
+font-size               = 13
 
 #cursor-style = block
 cursor-style-blink = true
