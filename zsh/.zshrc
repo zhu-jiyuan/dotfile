@@ -116,6 +116,10 @@ if command -v uv >/dev/null 2>&1; then
   fi
 fi
 
+
+
+
+
 # 加入到 fpath
 fpath=("$COMPDIR" $fpath)
 
@@ -132,6 +136,9 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
 if command -v kubectl > /dev/null 2>&1; then
 	source <(kubectl completion zsh)
+fi
+if command -v jj > /dev/null 2>&1; then
+	source <(jj util completion zsh)
 fi
 
 # zoxide - smarter cd
