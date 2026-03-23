@@ -63,3 +63,5 @@
     hunk-header-style = file line-number syntax
 
 
+[safe]
+	directory = *

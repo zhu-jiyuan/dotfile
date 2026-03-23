@@ -70,8 +70,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ############## load theme ################
 # config man theme
 # Depend on bat
-export MANPAGER='sh -c "col -bx | bat -pl man --theme=OneHalfLight"'
-export MANROFFOPT='-c'
+# export MANPAGER='sh -c "col -bx | bat -pl man --theme=OneHalfLight"'
+# export MANROFFOPT='-c'
 
 ############## zinit ################
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
@@ -119,6 +119,33 @@ fi
 
 
 
+# make target completion
+if [[ ! -f "$COMPDIR/_make" ]]; then
+  cat > "$COMPDIR/_make" << 'MAKECOMP'
+#compdef make
+
+_make_targets() {
+  local -a targets
+  local makefile
+  for makefile in GNUmakefile Makefile makefile; do
+    [[ -f $makefile ]] && break
+    makefile=""
+  done
+  [[ -z $makefile ]] && return
+  targets=(${(f)"$(awk -F: '/^[a-zA-Z0-9][a-zA-Z0-9._-]*[[:space:]]*:([^=]|$)/ {print $1}' "$makefile" | sed 's/[[:space:]]*$//')"})
+  _describe -t targets 'make targets' targets
+}
+
+_arguments \
+  '-f[specify makefile]:makefile:_files' \
+  '-j[parallel jobs]:jobs:' \
+  '-k[keep going on errors]' \
+  '-n[dry run]' \
+  '-B[unconditionally make all targets]' \
+  '-C[change directory]:directory:_directories' \
+  '*:target:_make_targets'
+MAKECOMP
+fi
 
 # 加入到 fpath
 fpath=("$COMPDIR" $fpath)
@@ -141,6 +168,7 @@ if command -v jj > /dev/null 2>&1; then
 	source <(jj util completion zsh)
 fi
 
+
 # zoxide - smarter cd
 # https://github.com/ajeetdsouza/zoxide
 if command -v zoxide > /dev/null 2>&1; then
@@ -155,9 +183,38 @@ source $ZSH/fzf-theme.zsh
 
 
 # fnm
-FNM_PATH="/home/ohayo/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/ohayo/.local/share/fnm:$PATH"
+  export PATH="$FNM_PATH:$PATH"
   eval "`fnm env`"
 fi
 
+# pyenv
+# https://github.com/pyenv/pyenv#installation
+if command -v pyenv > /dev/null 2>&1; then
+	export PYENV_ROOT="$HOME/.pyenv"
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
+
+# fnm
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
