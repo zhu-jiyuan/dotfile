@@ -7,7 +7,7 @@ addToPathFront /opt/cuda/bin
 addToPathFront /usr/bin
 addToEnvFront LD_LIBRARY_PATH /opt/cuda/lib64
 addToPathFront $HOME/go/bin
-
+addToPathFront $HOME/.bun/bin
 ############### ENV ##################
 OS=$(uname -s)
 
