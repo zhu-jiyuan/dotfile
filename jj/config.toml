@@ -1,0 +1,6 @@
+[user]
+name = "jiyuan"
+email = "olderfe66@gmail.com"
+
+[ui]
+default-command = ["log", "-n", "5"]

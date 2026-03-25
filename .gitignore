@@ -8,3 +8,4 @@ emacs/*
 !emacs/init.el
 !emacs/lisp/
 fcitx5/conf/cached_layouts
+jj/repos/
