@@ -4,3 +4,7 @@ email = "olderfe66@gmail.com"
 
 [ui]
 default-command = ["log", "-n", "5"]
+
+[aliases]
+fetch = ["git", "fetch"]
+push = ["git", "push"]
