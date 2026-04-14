@@ -180,7 +180,6 @@ source $ZSH/plugins/ssh_tab.sh
 source $ZSH/fzf-theme.zsh
 
 [[ ! -f $ZSH/.p10k.zsh ]] || source $ZSH/.p10k.zsh
-source $ZSH/plugins/p10k-jj-status.zsh
 
 
 # fnm
