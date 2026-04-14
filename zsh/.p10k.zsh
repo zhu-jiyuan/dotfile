@@ -33,7 +33,6 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
-    jj_status               # jj status
     prompt_char             # prompt symbol
   )
 
