@@ -4,8 +4,16 @@ email = "olderfe66@gmail.com"
 
 [ui]
 default-command = ["log", "-n", "5"]
+editor = "nvim"
+
+[remotes.origin]
+auto-track-created-bookmarks = "glob:*"
+
+[revset-aliases]
+'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
 
 [aliases]
 fetch = ["git", "fetch"]
 push = ["git", "push"]
 bsp = ["bookmark", "set", "-B", "-r", "@-"]
+tug = ["bookmark", "advance", "--to", "closest_pushable(@)"]
