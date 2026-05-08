@@ -177,6 +177,7 @@ fi
 alias zi='__zoxide_zi'
 source $ZSH/plugins/sudo.zsh
 source $ZSH/plugins/ssh_tab.sh
+source $ZSH/plugins/jj-p10k-refresh.zsh
 source $ZSH/fzf-theme.zsh
 source $ZSH/fzf-tmux-cd.zsh
 
