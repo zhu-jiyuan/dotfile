@@ -15,6 +15,7 @@ auto-track-created-bookmarks = "glob:*"
 
 [aliases]
 fetch = ["git", "fetch"]
+ft = ["git", "fetch"]
 push = ["git", "push"]
 bsp = ["bookmark", "set", "-B", "-r", "@-"]
 tug = ["bookmark", "advance", "--to", "closest_pushable(@)"]
