@@ -3,8 +3,9 @@ name = "jiyuan"
 email = "olderfe66@gmail.com"
 
 [ui]
-default-command = ["log", "-n", "5"]
+default-command = ["log", "-n", "8"]
 editor = "nvim"
+diff-formatter = ["difft", "--color=always", "$left", "$right"]
 
 [remotes.origin]
 auto-track-created-bookmarks = "glob:*"
