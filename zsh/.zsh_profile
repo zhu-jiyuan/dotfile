@@ -75,6 +75,9 @@ alias ts='tmux-sessionizer'
 # fzf
 alias fzfp='fzf --preview "batcat --color=always {}"'
 
+# JS
+alias pm='pnpm'
+
 #kitty terminal
 if command -v kitty > /dev/null 2>&1; then
     export TERMINAL=kitty
