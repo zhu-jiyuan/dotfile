@@ -116,6 +116,13 @@ if command -v uv >/dev/null 2>&1; then
   fi
 fi
 
+# 如果 pnpm 补全不存在就生成
+if command -v pnpm >/dev/null 2>&1; then
+  if [[ ! -f "$COMPDIR/_pnpm" ]]; then
+    pnpm completion zsh > "$COMPDIR/_pnpm" 2>/dev/null
+  fi
+fi
+
 
 
 
