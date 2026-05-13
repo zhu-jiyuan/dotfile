@@ -58,6 +58,10 @@ unsetopt flowcontrol
 # close zsh parse *
 setopt no_nomatch
 
+# enable extended glob qualifiers like (#qN.mh+24) — required for
+# the compinit/_gen_comp cache freshness checks below.
+setopt extended_glob
+
 # History won't save duplicates.
 setopt HIST_IGNORE_ALL_DUPS
 
@@ -96,34 +100,24 @@ FPATH="$HOME/.docker/completions:$FPATH"
 COMPDIR="$HOME/.zsh/completions"
 mkdir -p "$COMPDIR"
 
-# 如果 podman 补全不存在就生成
-if command -v podman >/dev/null 2>&1; then
-  if [[ ! -f "$COMPDIR/_podman" ]]; then
-    podman completion zsh > "$COMPDIR/_podman"
+# Regenerate cached completion if the source binary is newer, or cache is >7 days old.
+# Auto-refreshes when tools are upgraded — no manual `rm` needed.
+_gen_comp() {
+  local name=$1 cmd=$2 gen=$3
+  local cache="$COMPDIR/_$name"
+  (( ${+commands[$cmd]} )) || return
+  if [[ ! -f $cache || $commands[$cmd] -nt $cache || -n $cache(#qN.mh+168) ]]; then
+    eval "$gen" > "$cache"
+    rm -f "$cache.zwc"
   fi
-fi
+}
 
-# 如果 docker 补全不存在就生成
-if command -v docker >/dev/null 2>&1; then
-  if [[ ! -f "$COMPDIR/_docker" ]]; then
-    docker completion zsh > "$COMPDIR/_docker"
-  fi
-fi
-
-if command -v uv >/dev/null 2>&1; then
-  if [[ ! -f "$COMPDIR/_uv" ]]; then
-	uv generate-shell-completion zsh > "$COMPDIR/_uv"
-  fi
-fi
-
-# 如果 pnpm 补全不存在就生成
-if command -v pnpm >/dev/null 2>&1; then
-  if [[ ! -f "$COMPDIR/_pnpm" ]]; then
-    pnpm completion zsh > "$COMPDIR/_pnpm" 2>/dev/null
-  fi
-fi
-
-
+_gen_comp podman  podman  'podman completion zsh'
+_gen_comp docker  docker  'docker completion zsh'
+_gen_comp uv      uv      'uv generate-shell-completion zsh'
+_gen_comp kubectl kubectl 'kubectl completion zsh'
+_gen_comp jj      jj      'jj util completion zsh'
+_gen_comp pnpm    pnpm    'pnpm completion zsh'
 
 
 # make target completion
@@ -157,7 +151,22 @@ fi
 # 加入到 fpath
 fpath=("$COMPDIR" $fpath)
 
-autoload -U compinit && compinit
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+
+# Compile .zcompdump and cached completion files to bytecode in the background.
+# Speeds up the *next* shell start. Stale .zwc files are removed by _gen_comp
+# when their source is regenerated.
+() {
+  local f
+  for f in ${ZDOTDIR:-$HOME}/.zcompdump $COMPDIR/_*~*.zwc; do
+    [[ -f $f && ( ! -f $f.zwc || $f -nt $f.zwc ) ]] && zcompile -R -- $f.zwc $f &>/dev/null
+  done
+} &!
 
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
@@ -168,12 +177,6 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:git-checkout:*' sort true
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 
-if command -v kubectl > /dev/null 2>&1; then
-	source <(kubectl completion zsh)
-fi
-if command -v jj > /dev/null 2>&1; then
-	source <(jj util completion zsh)
-fi
 
 
 # zoxide - smarter cd
@@ -194,7 +197,10 @@ source $ZSH/fzf-tmux-cd.zsh
 # fnm
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
+  case ":$PATH:" in
+    *":$FNM_PATH:"*) ;;
+    *) export PATH="$FNM_PATH:$PATH" ;;
+  esac
   eval "`fnm env`"
 fi
 
@@ -204,13 +210,6 @@ if command -v pyenv > /dev/null 2>&1; then
 	export PYENV_ROOT="$HOME/.pyenv"
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
-fi
-
-# fnm
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
 fi
 
 # pnpm
@@ -226,5 +225,9 @@ esac
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+case ":$PATH:" in
+  *":$BUN_INSTALL/bin:"*) ;;
+  *) export PATH="$BUN_INSTALL/bin:$PATH" ;;
+esac
 export KUBECONFIG=$HOME/.kube/config
+
