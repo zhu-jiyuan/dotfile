@@ -1,30 +1,72 @@
-config="~/.config/rofi/powermenu/style.rasi"
-script_dir="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"
+#!/usr/bin/env bash
+set -euo pipefail
 
-shutdown="⏻"
-reboot=""
-lock=""
-suspend="󰤄"
-logout="󰗽"
+shutdown="⏻  power off"
+reboot="↻  reboot"
+lock="  lock"
+suspend="󰤄  suspend"
+logout="󰗽  log out"
+yes="yes"
+no="no"
 
-# sh "$script_dir/accent.sh"
+menu() {
+    local prompt="$1"
 
-chosen="$(printf "%s\n%s\n%s\n%s\n%s\n" "$shutdown" "$reboot" "$lock" "$suspend" "$logout" | rofi -theme "$config" -p "$(uptime -p)" -dmenu -selected-row 2)"
+    if command -v fuzzel >/dev/null 2>&1; then
+        fuzzel --dmenu --prompt="$prompt" --lines=5 --width=24 --no-sort
+    elif command -v rofi >/dev/null 2>&1; then
+        rofi -dmenu -p "$prompt" -theme "${XDG_CONFIG_HOME:-$HOME/.config}/rofi/powermenu/style.rasi"
+    else
+        notify-send "Power menu" "Install fuzzel or rofi to use this menu." 2>/dev/null || true
+        exit 1
+    fi
+}
+
+confirm() {
+    local action="$1"
+    local chosen
+
+    chosen="$(printf "%s\n%s\n" "$yes" "$no" | menu "$action? ")"
+    [[ "$chosen" == "$yes" ]]
+}
+
+lock_screen() {
+    if command -v swaylock >/dev/null 2>&1; then
+        swaylock -f -c 000000
+    elif command -v loginctl >/dev/null 2>&1; then
+        loginctl lock-session "${XDG_SESSION_ID:-}"
+    else
+        notify-send "Power menu" "No lock command found." 2>/dev/null || true
+        exit 1
+    fi
+}
+
+log_out() {
+    if command -v niri >/dev/null 2>&1 && [[ -n "${NIRI_SOCKET:-}" ]]; then
+        niri msg action quit
+    elif [[ -n "${XDG_SESSION_ID:-}" ]]; then
+        loginctl terminate-session "$XDG_SESSION_ID"
+    else
+        loginctl terminate-user "$USER"
+    fi
+}
+
+chosen="$(printf "%s\n%s\n%s\n%s\n%s\n" "$lock" "$suspend" "$logout" "$reboot" "$shutdown" | menu "$(uptime -p) ")"
 
 case "$chosen" in
-	"$shutdown")
-		poweroff
-    ;;
-	"$reboot")
-        reboot
-    ;;
-	"$lock")
-        hyprlock
-    ;;
-	"$suspend")
-        systemctl suspend
-    ;;
-	"$logout")
-		killall Hyprland
-	;;
+    "$shutdown")
+        confirm "power off" && systemctl poweroff
+        ;;
+    "$reboot")
+        confirm "reboot" && systemctl reboot
+        ;;
+    "$lock")
+        lock_screen
+        ;;
+    "$suspend")
+        confirm "suspend" && systemctl suspend
+        ;;
+    "$logout")
+        confirm "log out" && log_out
+        ;;
 esac

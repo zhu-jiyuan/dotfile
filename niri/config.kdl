@@ -65,9 +65,27 @@ input {
     // Uncomment this to make the mouse warp to the center of newly focused windows.
     // warp-mouse-to-focus
 
-    // Focus windows and outputs automatically when moving the mouse into them.
-    // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+// Focus windows and outputs automatically when moving the mouse into them.
+// Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
+// focus-follows-mouse max-scroll-amount="0%"
+}
+
+// niri detects connected outputs automatically when no matching output block is
+// active. Keep this machine-specific fallback disabled unless NVIDIA dual-screen
+// login becomes unstable again.
+/-output "DP-2" {
+    mode "2560x1440@59.951"
+    scale 1
+    transform "normal"
+    position x=0 y=0
+    focus-at-startup
+}
+
+/-output "HDMI-A-1" {
+    mode "1920x1080@60.000"
+    scale 1
+    transform "normal"
+    position x=2560 y=0
 }
 
 // // 笔记本屏
@@ -273,6 +291,10 @@ layout {
     }
 }
 
+xwayland-satellite {
+    path "xwayland-satellite"
+}
+
 // Add lines like this to spawn processes at startup.
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
@@ -281,8 +303,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
-spawn-at-startup "swaybg" "-i" "/home/pig/.config/wallpaper/01.png" "-m" "fill"
-
+spawn-sh-at-startup "swaybg -i ~/.config/kitty/bg1.png -m fill"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -336,6 +357,7 @@ window-rule{
 	match app-id="pavucontrol"
 	match app-id="blueman"
 	match app-id="nm-connection-editor"
+	match app-id="org.gnome.SystemMonitor"
 	match app-id="xdg-desktop-portal-gtk"
 	match app-id="QQ"
 	match app-id="steam"
@@ -379,9 +401,8 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+// Enable rounded corners for all windows.
+window-rule {
     geometry-corner-radius 12
     clip-to-geometry true
 }
@@ -626,7 +647,7 @@ binds {
     // rather than stacked on top of each other.
 
     Mod+W { toggle-column-tabbed-display; }
-	Mod+Tab { spawn "~/.local/bin/niri_fuzzel_window"; }
+	Mod+Tab { spawn "niri_fuzzel_window"; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have

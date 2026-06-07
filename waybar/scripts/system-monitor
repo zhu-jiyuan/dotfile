@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+view="${1:-resources}"
+
+open_terminal() {
+    local cmd="$1"
+
+    if command -v ghostty >/dev/null 2>&1; then
+        ghostty -e "$cmd" &
+    elif command -v xterm >/dev/null 2>&1; then
+        xterm -e "$cmd" &
+    else
+        notify-send "System monitor" "No graphical system monitor or terminal found." 2>/dev/null || true
+        exit 1
+    fi
+}
+
+if command -v gnome-system-monitor >/dev/null 2>&1; then
+    case "$view" in
+        processes)
+            gnome-system-monitor --show-processes-tab >/dev/null 2>&1 &
+            ;;
+        filesystems)
+            gnome-system-monitor --show-file-systems-tab >/dev/null 2>&1 &
+            ;;
+        *)
+            gnome-system-monitor --show-resources-tab >/dev/null 2>&1 &
+            ;;
+    esac
+elif command -v btop >/dev/null 2>&1; then
+    open_terminal btop
+elif command -v htop >/dev/null 2>&1; then
+    open_terminal htop
+else
+    open_terminal top
+fi

@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+notify() {
+    notify-send "Network" "$1" 2>/dev/null || true
+}
+
+menu() {
+    if command -v fuzzel >/dev/null 2>&1; then
+        fuzzel --dmenu --prompt="Wi-Fi " --lines=12 --width=44 --no-sort --with-nth=2 --accept-nth=1
+    elif command -v zenity >/dev/null 2>&1; then
+        zenity --list --title="Wi-Fi" --column="action" --column="network" --hide-column=1 --width=520 --height=420
+    else
+        notify "Install fuzzel or zenity to use the Wi-Fi menu."
+        exit 1
+    fi
+}
+
+wifi_device="$(
+    nmcli -t -f DEVICE,TYPE device status |
+        awk -F: '$2 == "wifi" { print $1; exit }'
+)"
+
+if [[ -z "$wifi_device" ]]; then
+    notify "No Wi-Fi device found."
+    exit 1
+fi
+
+entries="$(mktemp)"
+trap 'rm -f "$entries"' EXIT
+
+wifi_radio="$(nmcli -t -f WIFI general 2>/dev/null || true)"
+active_ssid="$(nmcli -t --escape no -f ACTIVE,SSID device wifi list ifname "$wifi_device" --rescan no |
+    awk -F: '$1 == "yes" || $1 == "*" { print $2; exit }')"
+
+printf "refresh\t󰑓  Refresh\n" >>"$entries"
+printf "editor\t  Network connections\n" >>"$entries"
+
+if [[ "$wifi_radio" == "disabled" ]]; then
+    printf "wifi-on\t󰤨  Turn Wi-Fi on\n" >>"$entries"
+else
+    printf "wifi-off\t󰤭  Turn Wi-Fi off\n" >>"$entries"
+    if [[ -n "$active_ssid" ]]; then
+        printf "disconnect\t󰖪  Disconnect %s\n" "$active_ssid" >>"$entries"
+    fi
+
+    nmcli device wifi rescan ifname "$wifi_device" >/dev/null 2>&1 || true
+
+    while IFS=: read -r active ssid signal security; do
+        [[ -n "$ssid" ]] || continue
+
+        marker=" "
+        [[ "$active" == "*" || "$active" == "yes" ]] && marker="*"
+
+        if [[ -z "$security" || "$security" == "--" ]]; then
+            secure=0
+            security="open"
+        else
+            secure=1
+        fi
+
+        ssid_b64="$(printf "%s" "$ssid" | base64 -w 0)"
+        printf "connect:%s:%s\t%s %3s%%  %-12s %s\n" "$secure" "$ssid_b64" "$marker" "$signal" "$security" "$ssid" >>"$entries"
+    done < <(nmcli -t --escape no -f IN-USE,SSID,SIGNAL,SECURITY device wifi list ifname "$wifi_device" --rescan no)
+fi
+
+choice="$(menu <"$entries" || true)"
+[[ -n "$choice" ]] || exit 0
+
+case "$choice" in
+    refresh)
+        nmcli device wifi rescan ifname "$wifi_device" >/dev/null 2>&1 || true
+        exec "$0"
+        ;;
+    editor)
+        nm-connection-editor >/dev/null 2>&1 &
+        ;;
+    wifi-on)
+        nmcli radio wifi on
+        notify "Wi-Fi enabled."
+        ;;
+    wifi-off)
+        nmcli radio wifi off
+        notify "Wi-Fi disabled."
+        ;;
+    disconnect)
+        nmcli device disconnect "$wifi_device"
+        notify "Disconnected Wi-Fi."
+        ;;
+    connect:*)
+        IFS=: read -r _ secure ssid_b64 <<<"$choice"
+        ssid="$(printf "%s" "$ssid_b64" | base64 -d)"
+
+        if nmcli device wifi connect "$ssid" ifname "$wifi_device"; then
+            notify "Connected to $ssid."
+            exit 0
+        fi
+
+        if [[ "$secure" != "1" ]]; then
+            notify "Could not connect to $ssid."
+            exit 1
+        fi
+
+        if ! command -v zenity >/dev/null 2>&1; then
+            notify "Password required for $ssid. Install zenity or use Network connections."
+            exit 1
+        fi
+
+        password="$(zenity --password --title="Password for $ssid" 2>/dev/null || true)"
+        [[ -n "$password" ]] || exit 0
+
+        if nmcli device wifi connect "$ssid" password "$password" ifname "$wifi_device"; then
+            notify "Connected to $ssid."
+        else
+            notify "Could not connect to $ssid."
+            exit 1
+        fi
+        ;;
+esac
