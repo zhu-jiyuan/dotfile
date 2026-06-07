@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+notify() {
+    notify-send "Audio" "$1" 2>/dev/null || true
+}
+
+menu() {
+    if command -v fuzzel >/dev/null 2>&1; then
+        fuzzel --dmenu --prompt="Audio " --lines=10 --width=48 --no-sort --with-nth=2 --accept-nth=1
+    elif command -v zenity >/dev/null 2>&1; then
+        zenity --list --title="Audio" --column="action" --column="item" --hide-column=1 --width=560 --height=380
+    else
+        notify "Install fuzzel or zenity to use the audio menu."
+        exit 1
+    fi
+}
+
+default_sink="$(pactl get-default-sink 2>/dev/null || true)"
+entries="$(mktemp)"
+trap 'rm -f "$entries"' EXIT
+
+mute_state="$(pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | awk '{ print $2 }')"
+volume="$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | awk -F/ 'NR == 1 { gsub(/[[:space:]]/, "", $2); print $2 }')"
+
+if [[ "$mute_state" == "yes" ]]; then
+    printf "mute\t  Unmute default output\n" >>"$entries"
+else
+    printf "mute\t  Mute default output\n" >>"$entries"
+fi
+
+printf "volume-up\t  Volume up     %s\n" "${volume:-unknown}" >>"$entries"
+printf "volume-down\t  Volume down   %s\n" "${volume:-unknown}" >>"$entries"
+
+if command -v pavucontrol >/dev/null 2>&1; then
+    printf "settings\t󰓃  Open volume control\n" >>"$entries"
+fi
+
+pactl list sinks | awk '
+    /^Sink #/ { name = ""; description = ""; next }
+    /^[[:space:]]+Name:/ {
+        sub(/^[[:space:]]+Name:[[:space:]]*/, "")
+        name = $0
+        next
+    }
+    /^[[:space:]]+Description:/ {
+        sub(/^[[:space:]]+Description:[[:space:]]*/, "")
+        description = $0
+        if (name != "") {
+            print name "\t" description
+        }
+    }
+' | while IFS=$'\t' read -r sink description; do
+    [[ -n "$sink" ]] || continue
+
+    marker=" "
+    [[ "$sink" == "$default_sink" ]] && marker="*"
+
+    sink_b64="$(printf "%s" "$sink" | base64 -w 0)"
+    printf "sink:%s\t%s  %s\n" "$sink_b64" "$marker" "$description" >>"$entries"
+done
+
+choice="$(menu <"$entries" || true)"
+[[ -n "$choice" ]] || exit 0
+
+case "$choice" in
+    mute)
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
+        ;;
+    volume-up)
+        wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+        ;;
+    volume-down)
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+        ;;
+    settings)
+        pavucontrol >/dev/null 2>&1 &
+        ;;
+    sink:*)
+        sink_b64="${choice#sink:}"
+        sink="$(printf "%s" "$sink_b64" | base64 -d)"
+
+        pactl set-default-sink "$sink"
+        pactl list short sink-inputs | while read -r input _; do
+            pactl move-sink-input "$input" "$sink" >/dev/null 2>&1 || true
+        done
+        notify "Default output changed."
+        ;;
+esac

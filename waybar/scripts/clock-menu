@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+action="${1:-calendar}"
+
+show_calendar() {
+    local day month year text
+
+    day="$(date +%-d)"
+    month="$(date +%-m)"
+    year="$(date +%Y)"
+    text="$(date '+%A, %Y-%m-%d %H:%M:%S %Z')"
+
+    if command -v zenity >/dev/null 2>&1; then
+        zenity --calendar \
+            --title="Calendar" \
+            --text="$text" \
+            --day="$day" \
+            --month="$month" \
+            --year="$year" \
+            --date-format="%Y-%m-%d" >/dev/null 2>&1 || true
+    else
+        notify-send "Calendar" "$text" 2>/dev/null || true
+    fi
+}
+
+open_settings() {
+    if command -v cinnamon-settings >/dev/null 2>&1; then
+        cinnamon-settings calendar >/dev/null 2>&1 &
+    elif command -v timedatectl >/dev/null 2>&1; then
+        notify-send "Date & Time" "$(timedatectl | sed -n '1,6p')" 2>/dev/null || true
+    else
+        notify-send "Date & Time" "$(date)" 2>/dev/null || true
+    fi
+}
+
+case "$action" in
+    settings)
+        open_settings
+        ;;
+    *)
+        show_calendar
+        ;;
+esac

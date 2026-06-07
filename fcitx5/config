@@ -2,7 +2,6 @@
 # Enumerate when press trigger key repeatedly
 EnumerateWithTriggerKeys=True
 # Enumerate Input Method Forward
-EnumerateForwardKeys=
 # Enumerate Input Method Backward
 EnumerateBackwardKeys=
 # Skip first input method while enumerating
@@ -11,24 +10,19 @@ EnumerateSkipFirst=False
 ModifierOnlyKeyTimeout=250
 
 [Hotkey/TriggerKeys]
-0=Super+space
-1=Zenkaku_Hankaku
-2=Hangul
 
 [Hotkey/AltTriggerKeys]
-0=Shift_L
 
-[Hotkey/EnumerateGroupForwardKeys]
+[Hotkey/EnumerateForwardKeys]
 0=Super+space
 
+[Hotkey/EnumerateGroupForwardKeys]
+
 [Hotkey/EnumerateGroupBackwardKeys]
-0=Shift+Super+space
 
 [Hotkey/ActivateKeys]
-0=Hangul_Hanja
 
 [Hotkey/DeactivateKeys]
-0=Hangul_Romaja
 
 [Hotkey/PrevPage]
 0=bracketleft
@@ -63,7 +57,7 @@ CompactInputMethodInformation=True
 # Show first input method information
 ShowFirstInputMethodInformation=True
 # Default page size
-DefaultPageSize=5
+DefaultPageSize=7
 # Override Xkb Option
 OverrideXkbOption=False
 # Custom Xkb Option
@@ -79,5 +73,4 @@ AllowInputMethodForPassword=False
 # Show preedit text when typing password
 ShowPreeditForPassword=False
 # Interval of saving user data in minutes
-AutoSavePeriod=30
-
+AutoSavePeriod=5
