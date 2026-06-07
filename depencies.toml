@@ -8,7 +8,7 @@ common = [
     "fd", "git", "fzf",
     "vim", "ripgrep",
     "batcat", "zsh",
-    "feh", "xclip",
+    "feh", "xclip", "wl-clipboard",
     "picom", "udisks3", "udiskie"
 ]
 

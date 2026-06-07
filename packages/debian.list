@@ -1,0 +1,97 @@
+# Debian/Ubuntu packages for this dotfile.
+# Format: package-name [command-name...]
+# If the package is not installed but one of the commands already exists, the
+# installer treats it as satisfied. This avoids overwriting newer local tools in
+# /usr/local/bin, ~/.local/bin, or ~/.cargo/bin.
+
+# Core shell and CLI tools
+zsh zsh
+git git
+curl curl
+wget wget
+unzip unzip
+zip zip
+7zip 7z 7zz
+fd-find fdfind fd
+ripgrep rg
+bat batcat bat
+fzf fzf
+zoxide zoxide
+jq jq
+tmux tmux
+neovim nvim
+fastfetch fastfetch
+btop btop
+htop htop
+eza eza
+
+# Language/tooling used by shell, Neovim, and local scripts
+nodejs node
+npm npm
+python3-pip pip3
+python3-venv
+cargo cargo
+rustc rustc
+lua5.4 lua5.4
+luarocks luarocks
+
+# Niri/Wayland desktop
+fuzzel fuzzel
+rofi rofi
+waybar waybar
+mako-notifier mako
+swaybg swaybg
+swaylock swaylock
+brightnessctl brightnessctl
+xwayland Xwayland
+wl-clipboard wl-copy wl-paste
+xclip xclip
+libnotify-bin notify-send
+network-manager nmcli
+network-manager-gnome nm-connection-editor
+pulseaudio-utils pactl
+wireplumber wpctl
+pavucontrol pavucontrol
+zenity zenity
+gnome-system-monitor gnome-system-monitor
+
+# Input method
+fcitx5 fcitx5 fcitx5-configtool
+fcitx5-chinese-addons
+fcitx5-config-qt
+fcitx5-frontend-gtk3
+fcitx5-frontend-gtk4
+fcitx5-frontend-qt5
+fcitx5-frontend-qt6
+fcitx5-module-wayland
+
+# Fonts
+fonts-jetbrains-mono
+fonts-font-awesome
+fonts-noto-cjk
+fonts-noto-cjk-extra
+fonts-noto-color-emoji
+fonts-wqy-microhei
+fonts-wqy-zenhei
+
+# Other configured apps and fallback tools
+kitty kitty
+thunar thunar
+thunar-volman
+mpv mpv
+feh feh
+xterm xterm
+
+# Legacy X11/i3 configs kept in this repo
+i3-wm i3
+i3status i3status
+dunst dunst
+picom picom
+dex dex
+xss-lock xss-lock
+flameshot flameshot
+x11-xserver-utils xrandr xmodmap
+xinput xinput
+x11-xkb-utils setxkbmap
+alsa-utils amixer
+mpc mpc

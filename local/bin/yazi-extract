@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -eq 0 ]]; then
+    printf 'Usage: yazi-extract <archive>...\n' >&2
+    exit 2
+fi
+
+extract_with_7z() {
+    local archive="$1"
+
+    if command -v 7z >/dev/null 2>&1; then
+        7z x -y "$archive"
+    elif command -v 7zz >/dev/null 2>&1; then
+        7zz x -y "$archive"
+    else
+        printf 'No archive extractor found. Install 7zip.\n' >&2
+        return 127
+    fi
+}
+
+extract_one() {
+    local archive="$1"
+    local lower
+
+    if [[ ! -f "$archive" ]]; then
+        printf 'Not a file: %s\n' "$archive" >&2
+        return 1
+    fi
+
+    lower="${archive,,}"
+    case "$lower" in
+        *.tar|*.tar.gz|*.tgz|*.tar.xz|*.txz|*.tar.bz2|*.tbz|*.tbz2|*.tar.zst|*.tzst)
+            tar -xf "$archive" && return 0
+            ;;
+    esac
+
+    extract_with_7z "$archive"
+}
+
+rc=0
+for archive in "$@"; do
+    extract_one "$archive" || rc=1
+done
+
+exit "$rc"
