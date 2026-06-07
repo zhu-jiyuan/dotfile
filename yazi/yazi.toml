@@ -7,5 +7,19 @@ image_bound = [ 50000, 50000 ]
 
 [opener]
 edit = [
-	{ run = 'nvim "$@"', block = true },
+	{ run = 'nvim "$@"', block = true, desc = "Neovim" },
+]
+
+extract = [
+	{ run = 'yazi-extract "$@"', block = true, desc = "Extract here" },
+]
+
+[open]
+prepend_rules = [
+	{ mime = "text/*", use = "edit" },
+	{ mime = "inode/empty", use = "edit" },
+	{ mime = "application/{json,ndjson,javascript,wine-extension-ini,toml,yaml,xml}", use = "edit" },
+	{ url = "*.{md,markdown,txt,log,csv,tsv,json,jsonc,toml,yaml,yml,xml,ini,conf,kdl,lua,py,js,ts,tsx,jsx,rs,go,c,cpp,h,hpp,java,sh,zsh,bash,fish,css,scss,html,sql,env}", use = "edit" },
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*,debian*-package,redhat-package-manager,rpm,android.package-archive}", use = "extract" },
+	{ url = "*.{zip,rar,7z,tar,gz,tgz,xz,txz,bz2,tbz,tbz2,zst,tzst,tar.gz,tar.xz,tar.bz2,tar.zst,cpio,arj,xar,cab,deb,rpm,apk,jar,war}", use = "extract" },
 ]

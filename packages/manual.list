@@ -1,0 +1,13 @@
+# Commands used by this dotfile that are not installed from the default Debian
+# apt repositories on this machine. The installer checks these and reports what
+# is still missing, but it does not try to install them automatically.
+#
+# Format: command<TAB>note
+
+niri	Niri compositor; currently provided from /usr/local/bin.
+ghostty	Ghostty terminal; currently provided from /usr/local/bin.
+xwayland-satellite	Niri Xwayland integration helper; currently provided from /usr/local/bin.
+yazi	File manager; usually installed by cargo or upstream release.
+jj	Jujutsu VCS; currently provided from /usr/local/bin.
+difft	Difftastic; currently provided from /usr/local/bin.
+wezterm	WezTerm config exists in this repo, but Debian trixie has no apt package.
