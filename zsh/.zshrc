@@ -118,6 +118,7 @@ _gen_comp uv      uv      'uv generate-shell-completion zsh'
 _gen_comp kubectl kubectl 'kubectl completion zsh'
 _gen_comp jj      jj      'jj util completion zsh'
 _gen_comp pnpm    pnpm    'pnpm completion zsh'
+_gen_comp mise    mise    'mise completion zsh'
 
 
 # make target completion
