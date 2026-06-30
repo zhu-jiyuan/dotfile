@@ -11,7 +11,9 @@ diff-formatter = ["difft", "--color=always", "$left", "$right"]
 auto-track-created-bookmarks = "glob:*"
 
 [revsets]
-log = "latest(all(), 10)"
+# Keep graph context around @. A timestamp-only revset like latest(all(), N)
+# can hide the working-copy parent and make the graph look disconnected.
+log = "present(@) | ancestors(immutable_heads().., 2) | trunk()"
 
 [revset-aliases]
 'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
