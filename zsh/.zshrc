@@ -30,6 +30,25 @@ addToPathFront() {
   addToEnvFront "PATH" $1
 }
 
+############### ENV ##################
+OS=$(uname -s)
+
+############### PATH #################
+addToPathFront /usr/local/go/bin
+addToPathFront $HOME/.local/bin
+addToPathFront $HOME/.local/kitty.app/bin
+addToPathFront $HOME/.cargo/bin
+addToPathFront /opt/cuda/bin
+addToPathFront /usr/bin
+addToEnvFront LD_LIBRARY_PATH /opt/cuda/lib64
+addToPathFront $HOME/go/bin
+addToPathFront $HOME/.bun/bin
+
+# mise - dev tools & env manager
+if command -v mise > /dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
 export ZSH="$HOME/.config/zsh"
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
