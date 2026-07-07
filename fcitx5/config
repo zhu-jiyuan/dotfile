@@ -10,6 +10,7 @@ EnumerateSkipFirst=False
 ModifierOnlyKeyTimeout=250
 
 [Hotkey/TriggerKeys]
+0=Control+space
 
 [Hotkey/AltTriggerKeys]
 
@@ -41,7 +42,7 @@ ModifierOnlyKeyTimeout=250
 
 [Behavior]
 # Active By Default
-ActiveByDefault=False
+ActiveByDefault=True
 # Reset state on Focus In
 resetStateWhenFocusIn=No
 # Share Input State

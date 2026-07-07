@@ -7,8 +7,10 @@ mouse-hide-while-typing = true
 font-family             = "JetBrainsMono Nerd Font Mono"
 font-size               = 14
 
-#cursor-style = block
+cursor-style = block
 cursor-style-blink = true
+custom-shader = ~/dotfile/ghostty/shaders/cursor_warp.glsl
+custom-shader-animation = always
 
 clipboard-read = allow
 
@@ -18,7 +20,6 @@ macos-titlebar-style = transparent
 
 gtk-titlebar = false
 gtk-wide-tabs= false
-
 
 
 
