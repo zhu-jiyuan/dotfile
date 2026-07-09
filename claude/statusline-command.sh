@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Claude Code statusLine:
-#   <jj change description>  <model>  ctx  $cost  <rate limits>
+#   <jj change description>  <model>  ctx  $cost  wf $workflow-cost  <rate limits>
+# $cost includes dynamic-workflow subagent spend (which Claude Code omits from
+# .cost.total_cost_usd); "wf $…" breaks out that workflow portion.
 
 input=$(cat)
 
@@ -33,6 +35,46 @@ fmt_reset() {
     fi
 }
 
+# Cost in USD of the current session's dynamic-workflow subagents.
+# Claude Code's .cost.total_cost_usd does NOT include background workflow
+# subagents (they run detached), so we price their token usage ourselves from
+# their transcripts under <session>/subagents/workflows/<wf>/agent-*.jsonl.
+# Rates per 1M tokens: [input, cache-read(0.1x), cache-write-5m(1.25x),
+# cache-write-1h(2x), output]. Current models have no long-context premium,
+# so 1M-context tokens bill at the standard rate.
+WF_JQ='
+def rate($model):
+  { "claude-opus-4-8":  [5,   0.5,  6.25, 10, 25],
+    "claude-sonnet-5":  [3,   0.3,  3.75, 6,  15],
+    "claude-haiku-4-5": [1,   0.1,  1.25, 2,  5],
+    "claude-fable-5":   [10,  1,    12.5, 20, 50] } as $t
+  | (($model // "") | sub("\\[1m\\]$";"") | sub("@.*$";"") | sub("-[0-9]{8}$";"")) as $k
+  | ($t[$k] // $t["claude-opus-4-8"]);
+def cost($m):
+  rate($m.model) as $r
+  | ($m.usage.input_tokens // 0) * $r[0]
+  + ($m.usage.cache_read_input_tokens // 0) * $r[1]
+  + (($m.usage.cache_creation.ephemeral_5m_input_tokens // $m.usage.cache_creation_input_tokens // 0)) * $r[2]
+  + ($m.usage.cache_creation.ephemeral_1h_input_tokens // 0) * $r[3]
+  + ($m.usage.output_tokens // 0) * $r[4];
+# Dedupe streaming re-writes: per message.id keep the record with the largest
+# output_tokens (the final usage line for that assistant turn).
+reduce (inputs | select(.message.usage) | .message | select(.id)) as $m ({};
+  .[$m.id] as $p
+  | if ($p == null) or (($m.usage.output_tokens // 0) > ($p.usage.output_tokens // 0))
+    then .[$m.id] = $m else . end)
+| ([.[]] | map(cost(.)) | add // 0) / 1000000
+'
+wf_cost=""
+if [ -n "$transcript" ]; then
+    wf_dir="${transcript%.jsonl}/subagents/workflows"
+    if [ -d "$wf_dir" ]; then
+        wf_cost=$(find "$wf_dir" -name 'agent-*.jsonl' -print0 2>/dev/null \
+            | xargs -0 -r jq -n "$WF_JQ" 2>/dev/null \
+            | awk '{s += $1} END { if (s > 0) printf "%.6f", s }')
+    fi
+fi
+
 # Total tokens currently in the context window (from last message usage)
 tokens=""
 if [ -n "$transcript" ] && [ -f "$transcript" ]; then
@@ -53,10 +95,16 @@ if command -v jj >/dev/null 2>&1; then
     fi
 fi
 
-# Session cost in USD (e.g. $0.42)
+# Session cost in USD (e.g. $0.42), including dynamic-workflow subagents.
+# cost_part shows the combined total; wf_part breaks out the workflow portion.
 cost_part=""
-if [ -n "$cost" ]; then
-    cost_part="  \$$(awk "BEGIN{printf \"%.2f\", $cost}")"
+wf_part=""
+if [ -n "$cost" ] || [ -n "$wf_cost" ]; then
+    total_cost=$(awk "BEGIN{printf \"%.6f\", ${cost:-0} + ${wf_cost:-0}}")
+    cost_part="  \$$(awk "BEGIN{printf \"%.2f\", $total_cost}")"
+fi
+if [ -n "$wf_cost" ] && [ "$(awk "BEGIN{print ($wf_cost >= 0.005)}")" = 1 ]; then
+    wf_part="  wf \$$(awk "BEGIN{printf \"%.2f\", $wf_cost}")"
 fi
 
 # Rate-limit usage (Pro/Max only, present after first API call)
@@ -91,6 +139,9 @@ if [ -n "$tok_part" ]; then
 fi
 if [ -n "$cost_part" ]; then
     printf " \033[32m%s\033[0m" "$cost_part"
+fi
+if [ -n "$wf_part" ]; then
+    printf " \033[36m%s\033[0m" "$wf_part"
 fi
 if [ -n "$rl_part" ]; then
     printf " \033[35m%s\033[0m" "$rl_part"
