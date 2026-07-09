@@ -172,10 +172,15 @@ fi
 fpath=("$COMPDIR" $fpath)
 
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-  compinit
+# Use a dedicated dump file: on Ubuntu, /etc/zsh/zshrc runs compinit *before*
+# this file adds $COMPDIR to fpath, so the default ~/.zcompdump is always
+# missing our completions (and always looks fresh). A separate dump keyed to
+# our full fpath avoids fighting over the same cache.
+ZCOMPDUMP="$HOME/.zcompdump-dotfile"
+if [[ -n $ZCOMPDUMP(#qN.mh+24) ]]; then
+  compinit -d "$ZCOMPDUMP"
 else
-  compinit -C
+  compinit -C -d "$ZCOMPDUMP"
 fi
 
 # Compile .zcompdump and cached completion files to bytecode in the background.
@@ -183,7 +188,7 @@ fi
 # when their source is regenerated.
 () {
   local f
-  for f in ${ZDOTDIR:-$HOME}/.zcompdump $COMPDIR/_*~*.zwc; do
+  for f in $ZCOMPDUMP $COMPDIR/_*~*.zwc; do
     [[ -f $f && ( ! -f $f.zwc || $f -nt $f.zwc ) ]] && zcompile -R -- $f.zwc $f &>/dev/null
   done
 } &!
