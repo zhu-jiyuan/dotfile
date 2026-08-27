@@ -3,17 +3,14 @@ name = "jiyuan"
 email = "olderfe66@gmail.com"
 
 [ui]
-default-command = ["log", "-n", "10"]
 editor = "nvim"
 diff-formatter = ["difft", "--color=always", "$left", "$right"]
+default-command = "log"
 
 [remotes.origin]
 auto-track-created-bookmarks = "glob:*"
 
 [revsets]
-# Keep graph context around @. A timestamp-only revset like latest(all(), N)
-# can hide the working-copy parent and make the graph look disconnected.
-log = "present(@) | ancestors(immutable_heads().., 2) | trunk()"
 
 [revset-aliases]
 'closest_pushable(to)' = 'heads(::to & ~description(exact:"") & (~empty() | merges()))'
@@ -24,3 +21,4 @@ ft = ["git", "fetch"]
 push = ["git", "push"]
 bsp = ["bookmark", "set", "-B", "-r", "@-"]
 tug = ["bookmark", "advance", "--to", "closest_pushable(@)"]
+la = ["log", "-r", "::"]
