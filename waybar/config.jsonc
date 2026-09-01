@@ -107,7 +107,7 @@
 	},
 	"custom/power": {
 		"tooltip": false,
-		"on-click": "rofi-powermenu",
+		"on-click": "$HOME/.config/rofi/bin/rofi-powermenu",
 		"format": "☭"
 	},
 	"later": {
