@@ -3,8 +3,8 @@
 theme = iTerm2 Solarized Light
 #keybind=clear
 
-# Let terminal applications such as Codex handle Ctrl+Enter.
-keybind = ctrl+enter=unbind
+# Send Ctrl+J for newline in Codex and Claude Code.
+keybind = ctrl+enter=text:\n
 # Keep fullscreen available without taking Codex's multiline shortcut.
 keybind = f11=toggle_fullscreen
 
@@ -25,4 +25,3 @@ macos-titlebar-style = transparent
 
 gtk-titlebar = false
 gtk-wide-tabs= false
-
