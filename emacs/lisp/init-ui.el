@@ -1,4 +1,4 @@
-;;;emacs ui:
+;;; init-ui.el --- Appearance and display settings -*- lexical-binding: t; -*-
 
 (use-package ef-themes
   :ensure t
@@ -20,17 +20,9 @@
 (xterm-mouse-mode 1)
 
 
-(setq locale-coding-system 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-selection-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-language-environment 'utf-8)
-(set-clipboard-coding-system 'utf-8)
-(set-file-name-coding-system 'utf-8)
-(set-buffer-file-coding-system 'utf-8)
+(set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
-(modify-coding-system-alist 'process "*" 'utf-8)
+(set-selection-coding-system 'utf-8)
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
@@ -40,7 +32,6 @@
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-irc nil)
-  (doom-modeline-mode t)
   (doom-modeline-mu4e nil)
   (doom-modeline-gnus nil)
   (doom-modeline-github nil)
@@ -67,9 +58,11 @@
     :global t
     (if keycast-mode
         (progn
-          (add-hook 'pre-command-hook 'keycast--update t)
+          (add-hook 'post-command-hook #'keycast--update t)
+          (add-hook 'minibuffer-exit-hook #'keycast--minibuffer-exit t)
           (add-to-list 'global-mode-string '("" keycast-mode-line "  ")))
-      (remove-hook 'pre-command-hook 'keycast--update)
+      (remove-hook 'post-command-hook #'keycast--update)
+      (remove-hook 'minibuffer-exit-hook #'keycast--minibuffer-exit)
       (setq global-mode-string (delete '("" keycast-mode-line "  ") global-mode-string))
       ))
 

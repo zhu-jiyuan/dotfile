@@ -1,4 +1,4 @@
-
+;;; init-lsp.el --- Optional LSP configuration -*- lexical-binding: t; -*-
 
 ; LSP-Mode configuration 
 ;; (use-package lsp-mode
