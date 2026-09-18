@@ -1,4 +1,4 @@
-
+;;; init-tools.el --- Navigation and development tools -*- lexical-binding: t; -*-
 ;; (use-package amx
 ;;   :ensure t
 ;;   :init (amx-mode))
@@ -7,7 +7,7 @@
   :ensure t
   :bind (("C-x o" . 'ace-window)))
 
-(which-key-mode)
+(which-key-mode 1)
 
 (use-package flycheck
   :ensure t
@@ -39,13 +39,18 @@
   (vertico-mode))
 
 (use-package savehist
-  :ensure t
+  :ensure nil
   :init
   (savehist-mode))
 
+(use-package recentf
+  :ensure nil
+  :init
+  (recentf-mode 1))
+
 ;; Emacs minibuffer configurations.
 (use-package emacs
-  :ensure t
+  :ensure nil
   :custom
   ;; Enable context menu. `vertico-multiform-mode' adds a menu in the minibuffer
   ;; to switch display modes.
@@ -107,7 +112,7 @@
          ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
 	 
 	 ("C-x b" . consult-buffer)                ;; orid. switch-to-buffer, 切换缓冲区
-         ("C-x p f" . consult-projectile-find-file) ; 如果使用 Projectile 插件
+	 ("C-x p f" . project-find-file)
 	 
 	 ;; C-c bindings in `mode-specific-map'
 	 ("C-c M-x" . consult-mode-command)
@@ -204,11 +209,6 @@
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   ;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
   )
-
-(use-package marginalia
-  :ensure t
-  :config
-  (marginalia-mode))
 
 (use-package embark
   :ensure t

@@ -1,17 +1,18 @@
+;;; init.el --- Personal Emacs configuration -*- lexical-binding: t; -*-
 
-;;; init:
-
-(tool-bar-mode 0)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode 0))
 (menu-bar-mode 0)
-(set-frame-font "JetBrainsMono Nerd Font 13" nil t)
-(scroll-bar-mode 0)
+(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font 13"))
+(when (display-graphic-p)
+  (set-frame-font "JetBrainsMono Nerd Font 13" nil t))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode 0))
 (show-paren-mode 1)
 
 (electric-pair-mode t)
 
 (pixel-scroll-precision-mode t)
-
-(add-hook 'prog-mod-hook #'show-paren-mode)
 
 (column-number-mode t)
 (global-display-line-numbers-mode 1)
@@ -29,14 +30,16 @@
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 
 (defun open-my-config-file ()
+  "Open this Emacs configuration."
   (interactive)
-  (find-file "~/.config/emacs/init.el"))
+  (find-file (locate-user-emacs-file "init.el")))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("gnu"    . "https://elpa.gnu.org/packages/") t)
 ;(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (package-initialize)
+(require 'use-package)
 
 
 (let ((dir (locate-user-emacs-file "lisp")))
@@ -44,10 +47,11 @@
 
 (use-package exec-path-from-shell
   :ensure t
-  :init
+  :if (or (daemonp) (memq window-system '(mac ns x pgtk)))
+  :custom
+  (exec-path-from-shell-arguments '("-l"))
   :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 
 
 (with-temp-message ""
@@ -73,5 +77,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
 

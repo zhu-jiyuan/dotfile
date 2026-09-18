@@ -1,4 +1,4 @@
-;;; edit
+;;; init-edit.el --- Editing and language support -*- lexical-binding: t; -*-
 
 (use-package mwim
   :ensure t
@@ -67,7 +67,7 @@
 
 
 (use-package eglot
-  :ensure t
+  :ensure nil
   :hook
   ;; 在 Python 和 Go 模式加载时自动启动 Eglot
   ((
@@ -97,19 +97,19 @@
 
 (use-package lsp-treemacs
   :ensure t  
-  :init (lsp-treemacs-sync-mode 1)
   :commands lsp-treemacs-errors-list)
 
 (use-package envrc
   :ensure t
+  :if (executable-find "direnv")
   :hook (after-init . envrc-global-mode))
 
 (use-package go-mode
   :ensure t
-  :hook ((go-mode . eglot-ensure)) ;; 确保进入 go-mode 启动 LSP
-  :config
-  ;; 保存时自动格式化 (gofmt/goimports)
-  (add-hook 'before-save-hook #'gofmt-before-save))
+  :hook
+  ;; Keep Go formatting local to Go buffers, including tree-sitter mode.
+  ((go-mode go-ts-mode)
+   . (lambda ()
+       (add-hook 'before-save-hook #'gofmt nil t))))
 
 (provide 'init-edit)
-
