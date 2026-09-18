@@ -6,6 +6,7 @@ tmux/plugins/*
 nvim/
 emacs/*
 !emacs/init.el
+!emacs/early-init.el
 !emacs/lisp/
 fcitx5/conf/cached_layouts
 jj/repos/
