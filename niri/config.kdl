@@ -303,7 +303,7 @@ xwayland-satellite {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
-spawn-sh-at-startup "swaybg -i ~/.config/kitty/bg1.png -m fill"
+spawn-sh-at-startup "swaybg -i ~/.config/wallpaper/01.png -m fill"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
