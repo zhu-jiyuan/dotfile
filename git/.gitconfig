@@ -1,8 +1,8 @@
 
 
 [user]
-    name = JiYuan
-    email = olderfe66@gmail.com
+	name = JiYuan
+	email = olderfe66@gmail.com
 
 [core]
     editor = nvim
