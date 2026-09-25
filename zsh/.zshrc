@@ -104,10 +104,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 export ZINIT_ALIAS="zii"
 
 ############## plugins #################
-#compinit before
-zinit light Aloxaf/fzf-tab
+# Completion definitions must be available before compinit.
 zinit light zsh-users/zsh-completions
-zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-history-substring-search
 
 # docker
@@ -193,6 +191,9 @@ fi
   done
 } &!
 
+# fzf-tab needs compinit first, and must precede widget-wrapping plugins.
+zinit light Aloxaf/fzf-tab
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice depth"1" # git clone depth
 zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-autosuggestions
