@@ -9,8 +9,13 @@ keybind = ctrl+enter=text:\n
 keybind = f11=toggle_fullscreen
 
 mouse-hide-while-typing = true
-font-family             = "JetBrainsMono Nerd Font Mono"
+# Use Ghostty's built-in JetBrains Mono (default font).
 font-size               = 14
+
+# Keep CJK characters and punctuation on macOS PingFang SC.
+font-codepoint-map = U+3000-U+303F=PingFang SC
+font-codepoint-map = U+3400-U+4DBF,U+4E00-U+9FFF,U+F900-U+FAFF=PingFang SC
+font-codepoint-map = U+FF00-U+FFEF=PingFang SC
 
 cursor-style = block
 cursor-style-blink = true
