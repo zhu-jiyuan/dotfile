@@ -3,6 +3,7 @@
 [user]
 	name = JiYuan
 	email = olderfe66@gmail.com
+	signingKey = 
 
 [core]
     editor = nvim
@@ -65,3 +66,13 @@
 
 [safe]
 	directory = *
+[gpg]
+	format = openpgp
+	program = gpg
+[commit]
+	gpgSign = false
+[tag]
+	forceSignAnnotated = false
+[gpg "ssh"]
+	program = 
+	allowedSignersFile = 
