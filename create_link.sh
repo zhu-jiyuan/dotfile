@@ -83,5 +83,6 @@ create_symlinks "$PWD/fcitx5" "$config_dir/fcitx5"
 create_symlinks "$PWD/emacs" "$config_dir/emacs"
 create_symlinks "$PWD/jj" "$config_dir/jj"
 create_symlinks "$PWD/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+create_symlinks "$PWD/claude/keybindings.json" "$HOME/.claude/keybindings.json"
 
 create_symlinks_to_target "$PWD/local" "$HOME/.local"
