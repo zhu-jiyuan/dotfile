@@ -61,8 +61,8 @@ fi
 create_symlinks "$PWD/git/.gitconfig" "$HOME/.gitconfig"
 create_symlinks "$PWD/yazi" "$config_dir/yazi"
 create_symlinks "$PWD/tmux" "$config_dir/tmux"
-# tmm binary is fetched by TPM into the plugin dir; expose it on PATH
-create_symlinks "$PWD/tmux/plugins/tmm/tmm" "$local_bin_dir/tmm"
+# tm binary is fetched by TPM into the plugin dir; expose it on PATH
+create_symlinks "$PWD/tmux/plugins/tmux-manager/tm" "$local_bin_dir/tm"
 create_symlinks "$PWD/rofi" "$config_dir/rofi"
 create_symlinks "$PWD/zsh" "$config_dir/zsh"
 create_symlinks "$PWD/zsh/.zshrc" "$HOME/.zshrc"
