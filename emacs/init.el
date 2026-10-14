@@ -3,9 +3,17 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode 0))
 (menu-bar-mode 0)
-(add-to-list 'default-frame-alist '(font . "JetBrainsMono Nerd Font 13"))
-(when (display-graphic-p)
-  (set-frame-font "JetBrainsMono Nerd Font 13" nil t))
+(defun my/setup-frame-font (frame)
+  "Use an installed monospace font for graphical FRAME."
+  (when (display-graphic-p frame)
+    (with-selected-frame frame
+      (let ((family (seq-find
+                     (lambda (name) (find-font (font-spec :family name)))
+                     '("JetBrainsMono Nerd Font" "Menlo" "Monospace"))))
+        (when family
+          (set-frame-font (font-spec :family family :size 13.0) nil (list frame)))))))
+(add-hook 'after-make-frame-functions #'my/setup-frame-font)
+(my/setup-frame-font (selected-frame))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode 0))
 (show-paren-mode 1)
