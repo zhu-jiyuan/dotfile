@@ -1,5 +1,11 @@
 ;;; early-init.el --- Input method setup before creating frames -*- lexical-binding: t; -*-
 
+;; libgccjit can infer an invalid macOS 18 deployment target on macOS 27.
+;; Set the target for Emacs native compilation only, before packages load.
+(when (and (eq system-type 'darwin) (native-comp-available-p))
+  (require 'comp)
+  (add-to-list 'native-comp-driver-options "-mmacosx-version-min=14.0"))
+
 ;; GTK/X11 Emacs otherwise uses XIM, which fails to handle Fcitx reliably
 ;; under XWayland.  Use the GTK input module, as PGTK Emacs already does.
 (setq x-gtk-use-native-input t)
