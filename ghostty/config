@@ -10,7 +10,7 @@ keybind = f11=toggle_fullscreen
 
 mouse-hide-while-typing = true
 # Use Ghostty's built-in JetBrains Mono (default font).
-font-size               = 14
+font-size               = 19
 
 # Keep CJK characters and punctuation on macOS PingFang SC.
 font-codepoint-map = U+3000-U+303F=PingFang SC
@@ -24,7 +24,6 @@ cursor-style-blink = true
 # custom-shader-animation = always
 
 clipboard-read = allow
-
 clipboard-write = allow
 app-notifications = no-clipboard-copy
 macos-titlebar-style = transparent
