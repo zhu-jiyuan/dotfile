@@ -1,33 +1,39 @@
-# INSTALL
+# dotfile
 
-Bash can use it, maybe.
-I like zsh, btw.
+Personal configs, symlinked into `~/.config` and `$HOME`.
 
-```shell
-./install_dependencies.sh
-
-zsh install.sh
-
-# wait a minute
-
-# tmux init
-tmux
-# push prefix + I
-
-
-```
-
-## Dependencies
-
-`install_dependencies.sh` installs Debian/Ubuntu packages from
-`packages/debian.list`. It checks both dpkg package status and existing command
-names, so locally installed tools such as `nvim`, `niri`, or `ghostty` are not
-installed again from apt.
+## Install
 
 ```shell
-./install_dependencies.sh --dry-run
-./install_dependencies.sh
+git clone <repo-url> ~/dotfile
+cd ~/dotfile
+git submodule update --init --recursive
+
+# link configs (must run from the repo root)
+bash create_link.sh
+
+# install CLI tools listed in mise/config.toml
+mise install
 ```
 
-Tools that are not in the default Debian apt repositories are listed in
-`packages/manual.list`; the script reports missing ones after the apt pass.
+Then start `tmux` and press `prefix + I` to install plugins.
+
+`create_link.sh` never overwrites a real file or directory: if a target
+already exists, move it aside and run the script again.
+
+## Tools
+
+CLI tools are managed by [mise](https://mise.jdx.dev); add them to
+`mise/config.toml` (linked to `~/.config/mise`).
+
+## Font
+
+The terminal configs use JetBrains Mono Nerd Font.
+
+```shell
+# macOS
+brew install --cask font-jetbrains-mono-nerd-font
+
+# Linux
+sh install_font.sh
+```

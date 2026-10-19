@@ -1,0 +1,10 @@
+[tools]
+claude = "latest"
+codex = "latest"
+difftastic = "latest"
+fzf = "latest"
+neovim = "latest"
+tmux = "latest"
+tree-sitter = "latest"
+yazi = "latest"
+zoxide = "latest"
