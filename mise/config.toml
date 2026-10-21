@@ -11,3 +11,7 @@ tmux = "latest"
 tree-sitter = "latest"
 yazi = "latest"
 zoxide = "latest"
+
+[settings]
+# mise use -g 写到本机文件，不进仓库；要同步到所有机器的工具手动写进上面的 [tools]
+write_targets.tools = "~/.config/mise/config.local.toml"
