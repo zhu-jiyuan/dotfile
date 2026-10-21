@@ -22,11 +22,24 @@ create_symlinks() {
 	echo "[SUCCESS]: $target -> $src"
 }
 
-# 传入一个目录，和指定的目标目录，把该目录下的所有文件和目录创建软链接到目标目录
-create_symlinks_to_target() {
-	src_dir="$1"
-	target_dir="$2"
-	# echo "[DEBUG]: Creating symlinks from $src_dir to $target_dir"
+# 复制而不是软链接，本地的修改不会进仓库；目标已存在时保留本地的
+copy_file() {
+	src="$1"
+	target="$2"
+
+	if [ -e "$target" ]; then
+		echo "[INFO]: $target already exist, keep local one."
+		return 0
+	fi
+
+	cp "$src" "$target"
+	echo "[SUCCESS]: $src copied to $target"
+}
+
+# 把 src_dir 下的文件逐个链接到 target_dir 的对应位置，目录本身建成真实目录而不是链接，
+# 用于 ~/.local 这类其他程序也会写入的目录
+link_files_into() {
+	local src_dir="$1" target_dir="$2" file
 
 	if [ ! -d "$src_dir" ]; then
 		echo "[ERROR]: Source directory $src_dir does not exist."
@@ -38,7 +51,7 @@ create_symlinks_to_target() {
 	fi
 	for file in "$src_dir"/*; do
 		if [ -d "$file" ]; then
-			create_symlinks_to_target "$file" "$target_dir/$(basename "$file")"
+			link_files_into "$file" "$target_dir/$(basename "$file")"
 		elif [ -f "$file" ]; then
 			create_symlinks "$file" "$target_dir/$(basename "$file")"
 		fi
@@ -58,7 +71,7 @@ if [ ! -d "$local_bin_dir" ]; then
 	mkdir -p "$local_bin_dir"
 fi
 
-create_symlinks "$PWD/git/.gitconfig" "$HOME/.gitconfig"
+copy_file "$PWD/git/.gitconfig" "$HOME/.gitconfig"
 create_symlinks "$PWD/yazi" "$config_dir/yazi"
 create_symlinks "$PWD/tmux" "$config_dir/tmux"
 # tm binary is fetched by TPM into the plugin dir; expose it on PATH
@@ -86,4 +99,4 @@ create_symlinks "$PWD/mise" "$config_dir/mise"
 create_symlinks "$PWD/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 create_symlinks "$PWD/claude/keybindings.json" "$HOME/.claude/keybindings.json"
 
-create_symlinks_to_target "$PWD/local" "$HOME/.local"
+link_files_into "$PWD/local" "$HOME/.local"
