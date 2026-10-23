@@ -18,6 +18,7 @@ field() { jq -r "$1" <<<"$input"; }
 
 cwd=$(field '.cwd // .workspace.current_dir // empty')
 model=$(field '.model.display_name // empty')
+effort=$(field '.effort.level // empty')
 transcript=$(field '.transcript_path // empty')
 cost=$(field '.cost.total_cost_usd // empty')
 # Context tokens from the live payload. current_usage is null before the first
@@ -139,9 +140,41 @@ fi
 # yellow jj description | dim model | dim context | green cost | cyan workflow cost | magenta limits
 parts=()
 [ -n "$jj_part" ]   && parts+=("$(printf '\033[33m%s\033[0m' "$jj_part")")
-[ -n "$model" ]     && parts+=("$(printf '\033[2m%s\033[0m' "$model")")
-[ -n "$tok_part" ]  && parts+=("$(printf '\033[2m%s\033[0m' "$tok_part")")
-[ -n "$cost_part" ] && parts+=("$(printf '\033[32m%s\033[0m' "$cost_part")")
+# Dynamic colors: model by family, effort by level, ctx by usage percentage.
+model_lc="${model:l}"
+case "$model_lc" in
+    *opus*)   model_c=35 ;;  # magenta
+    *sonnet*) model_c=34 ;;  # blue
+    *haiku*)  model_c=36 ;;  # cyan
+    *fable*)  model_c=33 ;;  # yellow
+    *)        model_c=2  ;;  # dim
+esac
+case "$effort" in
+    low)    effort_c=32 ;;   # green
+    medium) effort_c=36 ;;   # cyan
+    high)   effort_c=33 ;;   # yellow
+    xhigh)  effort_c=31 ;;   # red
+    max)    effort_c=35 ;;   # magenta
+    *)      effort_c=2  ;;
+esac
+ctx_c=2
+if [ -n "$ctx_pct" ]; then
+    ctx_i=$(awk "BEGIN{printf \"%d\", $ctx_pct}")
+    if [ "$ctx_i" -lt 50 ]; then ctx_c=32
+    elif [ "$ctx_i" -lt 80 ]; then ctx_c=33
+    else ctx_c=31; fi
+fi
+if [ -n "$model" ]; then
+    m_seg="$(printf '\033[%sm%s\033[0m' "$model_c" "$model")"
+    [ -n "$effort" ] && m_seg="$m_seg$(printf ' \033[2m·\033[0m \033[%sm%s\033[0m' "$effort_c" "$effort")"
+    parts+=("$m_seg")
+fi
+[ -n "$tok_part" ]  && parts+=("$(printf '\033[%sm%s\033[0m' "$ctx_c" "$tok_part")")
+cost_c=32
+if [ -n "$total_cost" ]; then
+    cost_c=$(awk "BEGIN{ if ($total_cost < 1) print 32; else if ($total_cost < 5) print 33; else print 31 }")
+fi
+[ -n "$cost_part" ] && parts+=("$(printf '\033[%sm%s\033[0m' "$cost_c" "$cost_part")")
 [ -n "$wf_part" ]   && parts+=("$(printf '\033[36m%s\033[0m' "$wf_part")")
 [ -n "$rl_part" ]   && parts+=("$(printf '\033[35m%s\033[0m' "$rl_part")")
 printf '%s' "${(j:  :)parts}"
