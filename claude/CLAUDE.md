@@ -14,6 +14,10 @@
 - Use diagrams for complex explanations (Excalidraw-style preferred).
 - Address me as "sir".
 
+## How to work
+
+- When facing multiple problems, look at them together, find the shared root cause, and don't patch them one by one.
+
 ## Git
 
 - Commit without a `Co-Authored-By: Claude ...` trailer (or any other AI co-author line).
