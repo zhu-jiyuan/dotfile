@@ -95,9 +95,14 @@ fi
 # "(no description)". Outside a repo the segment is omitted entirely.
 jj_part=""
 if command -v jj >/dev/null 2>&1 && [ -n "$cwd" ]; then
-    if desc=$(cd "$cwd" 2>/dev/null && \
-        jj --no-pager --ignore-working-copy log --no-graph -r @ -T 'description.first_line()' 2>/dev/null); then
-        jj_part="${desc:-(no description)}"
+    if raw=$(cd "$cwd" 2>/dev/null && \
+        jj --no-pager --ignore-working-copy log --no-graph -r @ \
+            -T 'description.first_line()' 2>/dev/null); then
+        if [ -n "$raw" ]; then
+            jj_part="$(printf '\033[33m%s\033[0m' "$raw")"
+        else
+            jj_part="$(printf '\033[2;33m(no description)\033[0m')"
+        fi
     fi
 fi
 
@@ -114,12 +119,18 @@ if [ -n "$wf_cost" ] && [ "$(awk "BEGIN{print ($wf_cost >= 0.005)}")" = 1 ]; the
 fi
 
 # Rate-limit usage (Pro/Max only, present after first API call)
+# Each limit is colored by its own usage: green <50, yellow <80, red >=80.
+pct_color() {
+    awk "BEGIN{ if ($1 < 50) print 32; else if ($1 < 80) print 33; else print 31 }"
+}
 rl_items=()
 if [ -n "$rl_5h" ]; then
-    rl_items+=("${icon_5h} 5h $(awk "BEGIN{printf \"%.0f\", $rl_5h}")%$(fmt_reset "$rl_5h_reset")")
+    c=$(pct_color "$rl_5h")
+    rl_items+=("$(printf '\033[%sm%s 5h %.0f%%\033[0m\033[2m%s\033[0m' "$c" "$icon_5h" "$rl_5h" "$(fmt_reset "$rl_5h_reset")")")
 fi
 if [ -n "$rl_wk" ]; then
-    rl_items+=("${icon_wk} wk $(awk "BEGIN{printf \"%.0f\", $rl_wk}")%$(fmt_reset "$rl_wk_reset")")
+    c=$(pct_color "$rl_wk")
+    rl_items+=("$(printf '\033[%sm%s wk %.0f%%\033[0m\033[2m%s\033[0m' "$c" "$icon_wk" "$rl_wk" "$(fmt_reset "$rl_wk_reset")")")
 fi
 rl_part="${(j:  :)rl_items}"
 
@@ -139,7 +150,7 @@ fi
 # Assemble: every segment is colored on its own, then joined by two spaces.
 # yellow jj description | dim model | dim context | green cost | cyan workflow cost | magenta limits
 parts=()
-[ -n "$jj_part" ]   && parts+=("$(printf '\033[33m%s\033[0m' "$jj_part")")
+[ -n "$jj_part" ]   && parts+=("$jj_part")
 # Dynamic colors: model by family, effort by level, ctx by usage percentage.
 model_lc="${model:l}"
 case "$model_lc" in
@@ -169,12 +180,12 @@ if [ -n "$model" ]; then
     [ -n "$effort" ] && m_seg="$m_seg$(printf ' \033[2m·\033[0m \033[%sm%s\033[0m' "$effort_c" "$effort")"
     parts+=("$m_seg")
 fi
-[ -n "$tok_part" ]  && parts+=("$(printf '\033[%sm%s\033[0m' "$ctx_c" "$tok_part")")
-cost_c=32
-if [ -n "$total_cost" ]; then
-    cost_c=$(awk "BEGIN{ if ($total_cost < 1) print 32; else if ($total_cost < 5) print 33; else print 31 }")
+if [ -n "$tok_part" ]; then
+    parts+=("$(printf '\033[%sm%s\033[0m' "$ctx_c" "$tok_part")")
 fi
+cost_c=36  # fixed cyan, so cost never shares the ctx traffic-light colors
 [ -n "$cost_part" ] && parts+=("$(printf '\033[%sm%s\033[0m' "$cost_c" "$cost_part")")
 [ -n "$wf_part" ]   && parts+=("$(printf '\033[36m%s\033[0m' "$wf_part")")
-[ -n "$rl_part" ]   && parts+=("$(printf '\033[35m%s\033[0m' "$rl_part")")
-printf '%s' "${(j:  :)parts}"
+[ -n "$rl_part" ]   && parts+=("$rl_part")
+sep="  "
+printf '%s' "${(pj:$sep:)parts}"
