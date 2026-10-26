@@ -98,5 +98,6 @@ create_symlinks "$PWD/jj" "$config_dir/jj"
 create_symlinks "$PWD/mise" "$config_dir/mise"
 create_symlinks "$PWD/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 create_symlinks "$PWD/claude/keybindings.json" "$HOME/.claude/keybindings.json"
+create_symlinks "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
 link_files_into "$PWD/local" "$HOME/.local"
