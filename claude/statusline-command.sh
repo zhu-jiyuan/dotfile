@@ -93,18 +93,33 @@ fi
 # jj change description (first line of the working-copy change @).
 # Shown only when cwd is inside a jj repo; an empty description reads
 # "(no description)". Outside a repo the segment is omitted entirely.
-jj_part=""
+# Rendered at assembly time: its width budget depends on the other segments.
+in_jj=""
+jj_desc=""
 if command -v jj >/dev/null 2>&1 && [ -n "$cwd" ]; then
-    if raw=$(cd "$cwd" 2>/dev/null && \
+    if jj_desc=$(cd "$cwd" 2>/dev/null && \
         jj --no-pager --ignore-working-copy log --no-graph -r @ \
             -T 'description.first_line()' 2>/dev/null); then
-        if [ -n "$raw" ]; then
-            jj_part="$(printf '\033[33m%s\033[0m' "$raw")"
-        else
-            jj_part="$(printf '\033[2;33m(no description)\033[0m')"
-        fi
+        in_jj=1
     fi
 fi
+
+# Display width of $1 with ANSI colors removed. The (m) flag counts CJK as 2.
+vis_width() {
+    setopt localoptions extendedglob
+    local s="${1//$'\033'\[[0-9;]#m/}"
+    printf '%s' "${(m)#s}"
+}
+
+# Cut $1 to at most $2 display columns, ending in "…" when anything was removed.
+fit_cols() {
+    local s="$1" max="$2"
+    if (( ${(m)#s} > max )); then
+        while (( ${(m)#s} > max - 1 )); do s="${s[1,-2]}"; done
+        s="${s}…"
+    fi
+    printf '%s' "$s"
+}
 
 # Session cost in USD (e.g. $0.42), including dynamic-workflow subagents.
 # cost_part shows the combined total; wf_part breaks out the workflow portion.
@@ -150,7 +165,6 @@ fi
 # Assemble: every segment is colored on its own, then joined by two spaces.
 # yellow jj description | dim model | dim context | green cost | cyan workflow cost | magenta limits
 parts=()
-[ -n "$jj_part" ]   && parts+=("$jj_part")
 # Dynamic colors: model by family, effort by level, ctx by usage percentage.
 model_lc="${model:l}"
 case "$model_lc" in
@@ -188,4 +202,29 @@ cost_c=36  # fixed cyan, so cost never shares the ctx traffic-light colors
 [ -n "$wf_part" ]   && parts+=("$(printf '\033[36m%s\033[0m' "$wf_part")")
 [ -n "$rl_part" ]   && parts+=("$rl_part")
 sep="  "
+
+# The description gets only the columns the other segments leave, so it can
+# never push them off the line. Claude Code sets COLUMNS to the terminal width;
+# zsh reads 0 when it is absent (e.g. a manual run), which falls back to a fixed
+# budget. The reserve covers the UI's own padding and Nerd Font icons that some
+# terminals draw 2 columns wide. Too little room drops the description entirely.
+if [ -n "$in_jj" ]; then
+    jj_reserve=6
+    jj_min=8
+    if (( COLUMNS > 0 )); then
+        rest_width=$(vis_width "${(pj:$sep:)parts}")
+        jj_budget=$(( COLUMNS - rest_width - ${#sep} - jj_reserve ))
+    else
+        jj_budget=40
+    fi
+    if (( jj_budget >= jj_min )); then
+        if [ -n "$jj_desc" ]; then
+            jj_part="$(printf '\033[33m%s\033[0m' "$(fit_cols "$jj_desc" "$jj_budget")")"
+        else
+            jj_part="$(printf '\033[2;33m%s\033[0m' "$(fit_cols "(no description)" "$jj_budget")")"
+        fi
+        parts=("$jj_part" "${parts[@]}")
+    fi
+fi
+
 printf '%s' "${(pj:$sep:)parts}"
