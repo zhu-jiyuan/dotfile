@@ -58,6 +58,23 @@ link_files_into() {
 	done
 }
 
+# 把 src_dir 下的每个子目录整体链接到 target_dir，target_dir 本身保持真实目录，
+# 用于 ~/.claude/skills 这类同时有程序自管内容（synced/）的目录
+link_dirs_into() {
+	local src_dir="$1" target_dir="$2" dir
+
+	if [ ! -d "$src_dir" ]; then
+		echo "[INFO]: Source directory $src_dir does not exist, skip."
+		return 0
+	fi
+	mkdir -p "$target_dir"
+	for dir in "$src_dir"/*/; do
+		[ -d "$dir" ] || continue # 没有子目录时 glob 不展开
+		dir="${dir%/}"
+		create_symlinks "$dir" "$target_dir/$(basename "$dir")"
+	done
+}
+
 config_dir="$HOME/.config"
 # check config directory exists
 if [ ! -d "$config_dir" ]; then
@@ -100,5 +117,6 @@ create_symlinks "$PWD/mise" "$config_dir/mise"
 create_symlinks "$PWD/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
 create_symlinks "$PWD/claude/keybindings.json" "$HOME/.claude/keybindings.json"
 create_symlinks "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+link_dirs_into "$PWD/claude/skills" "$HOME/.claude/skills"
 
 link_files_into "$PWD/local" "$HOME/.local"
