@@ -230,7 +230,6 @@ back_to_search() {
 	draw_mode search '❯ ' 'Search tabs' rows
 }
 
-# Show an error above the list and stay put, keeping what was typed.
 show_error() {
 	printf '%s' "$1" | tr '\n' ' ' >"$TABFIND_STATE/error"
 	printf '%s' "${FZF_QUERY:-}" >"$TABFIND_STATE/input"

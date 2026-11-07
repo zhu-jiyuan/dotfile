@@ -38,7 +38,6 @@ local GREEN = rgb({ 86, 99, 0 }, { 190, 210, 90 })
 local AMBER = rgb({ 111, 84, 0 }, { 230, 195, 90 })
 local ACCENT = rgb({ 11, 95, 152 }, { 124, 192, 238 })
 
--- Program status mapped to its mark, word and place in a group.
 local STATES = {
 	blocked = { glyph = "●", word = "waiting", color = ORANGE, rank = 1 },
 	error = { glyph = "✗", word = "failed", color = ORANGE, rank = 2 },
@@ -188,7 +187,6 @@ local function pane_titles(session_id, blocks)
 	return table.concat(titles, " | ")
 end
 
--- The most urgent status across every pane in the tab.
 local function tab_state(session_id, blocks)
 	local best
 	for _, id in ipairs(blocks) do
@@ -243,7 +241,7 @@ local function tab_title(window, titles)
 	return titles ~= "" and titles or "shell"
 end
 
--- One session's tabs. A session closing while this runs just has no tabs.
+-- A session closing while this runs just has no tabs.
 local function session_windows(s)
 	if s.session_id ~= current_session and select(2, rex.session.attach({ session_id = s.session_id })) ~= nil then
 		return {}
@@ -283,7 +281,6 @@ for _, s in ipairs(sessions) do
 	end
 end
 
--- The columns of a tab row, after its indent.
 local row_width = WIDTH - INDENT
 local dir_width = math.min(20, math.floor(row_width * 0.25))
 local title_width = row_width - 2 - 2 - dir_width - 2 - RIGHT

@@ -10,8 +10,7 @@ local MISE_SHIMS = os.getenv("HOME") .. "/.local/share/mise/shims"
 -- The panel's share of the window, so the tab behind it stays visible.
 local WIDTH, HEIGHT = 0.88, 0.9
 
--- Close any panel left open in this session, such as in a tab since switched
--- away from. Returns whether one was open in the tab being looked at.
+-- A panel can be left open in a tab since switched away from.
 local function close_panels(session_id)
 	local view, err = rex.session.view({ session_id = session_id })
 	if view == nil then
@@ -39,7 +38,6 @@ rex.action({
 	category = "Tab",
 	keywords = "fzf fuzzy search switch jump goto window",
 	run = function(ctx)
-		-- The key closes the panel when it's already open.
 		if close_panels(ctx.session_id) then
 			return
 		end

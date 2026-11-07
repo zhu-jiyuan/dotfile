@@ -17,9 +17,11 @@ if [ ! -s "$theme_file" ]; then
 	exit 1
 fi
 
-# Tabs in a sidebar on the left.
 defaults write "$domain" Workspace.tabStyle -string vertical
 defaults write "$domain" Workspace.sidebarPosition -string left
+
+# tabfind.sh switches sessions through the app, which needs Remote Control on.
+defaults write "$domain" rex.client.remoteControl -bool true
 
 # Font, matching ghostty/config. Install it with the command in the README.
 defaults write "$domain" Workspace.terminalFontName -string "JetBrainsMono Nerd Font Mono"
