@@ -21,6 +21,7 @@
 
 ## Code
 
+- Do not consider legacy solutions or backward compatibility unless I explicitly require compatibility.
 - Occam's razor in design and implementation. Prefer the simplest design that solves the actual problem: fewer concepts, fewer layers, fewer moving parts. Every abstraction, indirection or option must justify its existence with a concrete need, not a hypothetical one.
 - Comment only when necessary. Let names and structure carry the meaning. A comment earns its place only for a non-obvious "why" (a workaround, an external constraint, a surprising invariant), never to restate what the code does.
 - Server-side design: keep it simple. Do only the checks, constraints and protections that are actually needed (validate at the boundary, protect data integrity, enforce auth and limits). Don't add speculative defenses, extra layers, or configurability for cases that don't exist yet.
