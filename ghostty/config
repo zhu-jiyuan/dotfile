@@ -1,6 +1,16 @@
 
 
-theme = iTerm2 Solarized Light
+theme = Notebook Paper
+# Ruled notebook paper. The red margin is a background tile inside the left padding; the rules
+# come from a shader that reads the cell height off the cursor, so they follow any font size.
+background-image = ~/.config/ghostty/notebook-paper.png
+background-image-position = top-left
+background-image-fit = none
+background-image-repeat = true
+window-padding-x = 22,2
+custom-shader = ~/.config/ghostty/shaders/notebook-rules.glsl
+# The rules never move, so redraw only when the terminal changes.
+custom-shader-animation = false
 #keybind=clear
 
 # Send Ctrl+J for newline in Codex and Claude Code.
@@ -19,9 +29,6 @@ font-codepoint-map = U+FF00-U+FFEF=PingFang SC
 
 cursor-style = block
 cursor-style-blink = true
-# Disabled while diagnosing cursor jumps: the shader draws a second moving block.
-# custom-shader = ~/dotfile/ghostty/shaders/cursor_warp.glsl
-# custom-shader-animation = always
 
 clipboard-read = allow
 clipboard-write = allow
