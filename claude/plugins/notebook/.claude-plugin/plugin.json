@@ -1,0 +1,1 @@
+{ "name": "notebook", "version": "0.1.0", "description": "Ruled notebook paper, sticky-note messages, hand-drawn critters and a notebook page for Claude Code.", "types": "./types/index.d.ts" }

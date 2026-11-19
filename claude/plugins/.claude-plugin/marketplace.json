@@ -1,0 +1,12 @@
+{
+  "name": "dotfile-local",
+  "owner": {
+    "name": "JiYuan"
+  },
+  "plugins": [
+    {
+      "name": "notebook",
+      "source": "./notebook"
+    }
+  ]
+}
