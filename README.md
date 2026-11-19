@@ -29,6 +29,23 @@ already exists, move it aside and run the script again.
 CLI tools are managed by [mise](https://mise.jdx.dev); add them to
 `mise/config.toml` (linked to `~/.config/mise`).
 
+## Notebook look
+
+[Notebook](claude/plugins/notebook/README.md) turns Claude Code, desktop and
+terminal, into ruled notebook paper: sticky-note messages, a hand-drawn
+critter on each row, and a "this page" pane with tallies, the to-do list and
+a pencil for context left. Install it from this repository root:
+
+```bash
+claude plugin install notebook --marketplace ./claude/plugins --scope user
+```
+
+Ghostty uses the same paper through its "Notebook Paper" theme
+(`ghostty/themes/`) and rules every window: a shader
+(`ghostty/shaders/notebook-rules.glsl`) reads the row height off the cursor, so
+the lines follow any font size, and `ghostty/notebook-paper.png` adds the red
+margin.
+
 ## Font
 
 The terminal configs use JetBrains Mono Nerd Font.
